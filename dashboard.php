@@ -1,6 +1,45 @@
 <?php
 session_start();
 
+$welcomePhrases = [
+    // Noraml Greeting
+    "Welcome back, ",
+    "Great to see you again, ",
+    "Hello there, ",
+    "Hi, ",
+    "Welcome aboard, ",
+    "Good to have you here, ",
+    "Nice to see you, ",
+    "How's it going, ",
+    "Ready to work, ",
+    "Let's get started, ",
+
+    // Professional/exam-related
+    "Time to craft some challenging questions, ",
+    "Ready to create your next masterpiece exam, ",
+    "Let's make some exams that students will remember, ",
+    "Another day, another opportunity to assess knowledge, ",
+    "The exam generator is at your service, ",
+    "Preparing the next generation of test-takers, ",
+
+    // Funny
+    "Brace yourself - exam creation in progress, ",
+    "Warning: Genius at work (that's you), ",
+    "The students don't know what's coming, ",
+    "Creating exams since " . date('Y') . ", ",
+    "Professional question-writer extraordinaire, ",
+    "The architect of student anxiety, ",
+    "Making students cry since... just kidding, ",
+    "This exam will write itself... said no professor ever, ",
+    "Coffee in one hand, exam questions in the other, ",
+    "Plotting... I mean, planning the next exam, ",
+    "The only thing we have to fear is... this exam, ",
+    "Keep calm and make exams, ",
+    "Not all heroes wear capes - some write exams, ",
+    "With great exam power comes great responsibility, ",
+    "Examining the examiners since... today, "
+];
+
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -81,6 +120,7 @@ $stmt->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="manifest" href="manifest.json">
     <script>
     MathJax = {
         tex: {
@@ -102,6 +142,7 @@ $stmt->close();
     };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    <script>navigator.serviceWorker.register("service-worker.js")</script>  
 </head>
 <body>
     <div class="sidebar">
@@ -167,7 +208,7 @@ $stmt->close();
     
     <div class="main-content">
         <div class="dashboard-header">
-            <h1>Welcome back, <?php echo htmlspecialchars(explode(' ', $_SESSION['name'])[0]); ?>!</h1>
+            <h1> <?php echo $welcomePhrases[array_rand($welcomePhrases)]?> Professor <?php echo htmlspecialchars(explode(' ', $_SESSION['name'])[0]); ?>!</h1>
             <div class="quick-stats">
                 <div class="stat-card">
                     <i class="fas fa-question"></i>

@@ -184,7 +184,8 @@ h2 {
 }
 
 .remove-university:hover {
-    text-decoration: underline;
+    font-size: 15px;
+    color: #721c24;
 }
 
 .no-university {
@@ -235,4 +236,20 @@ h2 {
     .btn-add {
         width: 100%;
     }
+}
+
+#first_name {
+    width: 95%;
+}
+
+#last_name {
+    width: 95%;
+}
+
+#email {
+    width: 95%;
+}
+
+#phone {
+    width: 95%;
 }

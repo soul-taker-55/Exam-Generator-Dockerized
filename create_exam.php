@@ -47,7 +47,14 @@ $stmt->close();
 
 // Load questions when subject is selected
 if ($selected_subject) {
-    $stmt = $conn->prepare("SELECT question_ID, question_text, difficulty, mark FROM question WHERE professor_ID = ? AND subject_ID = ? ORDER BY difficulty, date DESC");
+    $stmt = $conn->prepare("
+        SELECT q.question_ID, q.question_text, q.difficulty, q.mark, q.date, q.group_num, COUNT(q_group.question_ID) as group_size
+        FROM question q
+        LEFT JOIN question q_group ON q.group_num = q_group.group_num AND q.subject_ID = q_group.subject_ID AND q.group_num > 0
+        WHERE q.professor_ID = ? AND q.subject_ID = ?
+        GROUP BY q.question_ID, q.question_text, q.difficulty, q.mark, q.date, q.group_num
+        ORDER BY q.difficulty, q.date DESC
+    ");
     if ($stmt === false) {
         $error = "Database error: " . $conn->error;
     } else {
@@ -182,6 +189,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
                                value="<?php echo htmlspecialchars($exam_date); ?>" required>
                     </div>
                     
+                    <h3>Exam Layout Options</h3>
+                    <div class="form-group">
+                        <label for="template_type">Template Style:</label>
+                        <select id="template_type" name="template_type" onchange="showTemplatePreview(this.value)">
+                            <option value="default">Default Template</option>
+                            <option value="split">Split Page (Two Columns)</option>
+                            <option value="split_line">Split Page with line (Two Columns)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="template-preview">
+                        <h3>Template Preview</h3>
+                        <div id="preview-container">
+                            <img id="template-preview-img" src="template_default_preview.svg" alt="Template Preview" width="100%">
+                        </div>
+                        <div id="template-description" class="template-description">
+                            <p id="default-description">Standard layout with questions and answers in sequence.</p>
+                            <p id="split-description" style="display: none;">Questions are arranged in two columns to minimaize wasted space.</p>
+                            <p id="split-line-description" style="display: none;">Questions are arranged in two columns with a line between them to minimaize wasted space.</p>
+                        </div>
+                    </div>
+                    
                     <?php if (!empty($questions)): ?>
                     <div class="exam-summary">
                         <h3>Exam Summary</h3>
@@ -242,26 +271,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
                         </div>
                         
                         <div class="question-list">
+                            <?php $current_question_serial_number = 1; ?>
                             <?php foreach ($questions as $question): ?>
                             <div class="question-card" data-difficulty="<?php echo $question['difficulty']; ?>" data-points="<?php echo $question['mark']; ?>">
                                 <div class="question-header">
-                                    <div class="difficulty-badge difficulty-<?php echo $question['difficulty']; ?>">
-                                        <?php echo $question['difficulty'] == 1 ? 'Easy' : ($question['difficulty'] == 2 ? 'Medium' : 'Hard'); ?>
-                                    </div>
                                     <div class="question-actions">
                                         <input type="checkbox" id="question_<?php echo $question['question_ID']; ?>" 
                                                name="questions[]" value="<?php echo $question['question_ID']; ?>"
                                                onchange="updateSelectedCount()">
                                         <label for="question_<?php echo $question['question_ID']; ?>" class="checkbox-label"></label>
                                     </div>
+                                    <span class="question-serial-number">#<?php echo $current_question_serial_number; ?></span>
+                                    <div class="difficulty-badge difficulty-<?php echo $question['difficulty']; ?>">
+                                        <?php echo $question['difficulty'] == 1 ? 'Easy' : ($question['difficulty'] == 2 ? 'Medium' : 'Hard'); ?>
+                                    </div>
+                                    <?php if ($question['group_num'] > 0 && isset($question['group_size']) && $question['group_size'] > 0): ?>
+                                        <span class="group-badge">
+                                            Group <?php echo htmlspecialchars($question['group_num']); ?>
+                                            (<?php echo htmlspecialchars($question['group_size']); ?>)
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="question-content">
                                     <?php echo htmlspecialchars($question['question_text']); ?>
                                 </div>
                                 <div class="question-footer">
+                                    <span class="date" style="margin-right: 10px;"><?php echo date('M d, Y', strtotime($question['date'])); ?></span>
                                     <span class="mark"><?php echo $question['mark']; ?> pts</span>
                                 </div>
                             </div>
+                            <?php $current_question_serial_number++; ?>
                             <?php endforeach; ?>
                         </div>
                         
@@ -368,9 +407,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
             updateSelectedCount();
         }
         
+        // Show template preview based on selection
+        function showTemplatePreview(templateType) {
+            const previewImg = document.getElementById('template-preview-img');
+            
+            // Hide all descriptions first
+            document.getElementById('default-description').style.display = 'none';
+            document.getElementById('split-description').style.display = 'none';
+            document.getElementById('split-line-description').style.display = 'none';
+            
+            // Show the appropriate image and description
+            switch(templateType) {
+                case 'split':
+                    previewImg.src = 'template_split_preview.png';
+                    document.getElementById('split-description').style.display = 'block';
+                    break;
+                case 'split_line':
+                    previewImg.src = 'template_split_line_preview.png';
+                    document.getElementById('split-line-description').style.display = 'block';
+                    break;
+                default:
+                    previewImg.src = 'template_default_preview.png';
+                    document.getElementById('default-description').style.display = 'block';
+                    break;
+            }
+        }
+        
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             updateSelectedCount();
+            // Initialize template preview
+            showTemplatePreview(document.getElementById('template_type').value);
         });
     </script>
 </body>

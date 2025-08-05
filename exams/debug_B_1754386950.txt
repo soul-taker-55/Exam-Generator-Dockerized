@@ -1,0 +1,70 @@
+Command: pdflatex --interaction=nonstopmode --output-directory="C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\exam_generator/exams/" "C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\exam_generator/exams/exam_vB_graded_1754386948.tex"
+
+Return code: 1
+
+Output:
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+
+(C:/Program Files (x86)/EasyPHP-Devserver-17/eds-www/exam_generator/exams/exam_
+vB_graded_1754386948.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Program Files\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Program Files\MiKTeX\tex/latex/base\size12.clo))
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Program Files\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Program Files\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Program Files\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(C:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def)
+(C:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx))
+(C:\Program Files\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty)
+(C:\Program Files\MiKTeX\tex/latex/tools\multicol.sty)
+(C:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Program Files\MiKTeX\tex/latex/graphics\trig.sty)
+(C:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg)))
+(C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def)
+No file exam_vB_graded_1754386948.aux.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+(C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg))
+! Missing number, treated as zero.
+<to be read again>
+                   w
+l.56 \noindent
+               \textbf{1.} Solve for \(x \) in the equation \(2x+6 = 0 \)
+! Illegal unit of measure (pt inserted).
+<to be read again>
+                   w
+l.56 \noindent
+               \textbf{1.} Solve for \(x \) in the equation \(2x+6 = 0 \)
+[1{C:/Users/mauri/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+(C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\exam_generator\exams\exam_
+vB_graded_1754386948.aux) )
+(see the transcript file for additional information)<C:/Program Files/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.
+pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Progr
+am Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb>
+Output written on "C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\exam_gen
+erator\exams\exam_vB_graded_1754386948.pdf" (1 page, 97592 bytes).
+Transcript written on "C:\Program Files (x86)\EasyPHP-Devserver-17\eds-www\exam
+_generator\exams\exam_vB_graded_1754386948.log".

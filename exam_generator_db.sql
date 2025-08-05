@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2025 at 10:50 AM
+-- Generation Time: May 23, 2025 at 08:09 PM
 -- Server version: 5.7.17
--- PHP Version: 5.6.30
+-- PHP Version: 7.1.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -86,7 +86,7 @@ CREATE TABLE `professor` (
 
 INSERT INTO `professor` (`prof_ID`, `username`, `password`, `first_name`, `last_name`, `email`, `registration_date`, `phone_number`, `verification_token`, `is_verified`, `tokens`) VALUES
 (1, 'lkjhgf', '$2y$10$MmvuDrHNc.wzrQGWdQo8h.hBPOfdGi7cxC1PXmYqawbjLOoDC4ZJS', 'kjhgf', '', 'mauriciosayegh7@gmail.com', '2025-04-16', 'lkjhgf', NULL, 0, 10),
-(2, 'Mauricio_7', '$2y$10$OtfpP45LRyv7DGyLidoXOeKGbDdCzO7FMcK1OKgkCf3z3yP.VuVAe', 'Mauricio', 'Sayegh', 'mauriciosayegh7@gmail.com', '2025-04-16', '0937568644', NULL, 0, 10),
+(2, 'Mauricio_7', '$2y$10$OtfpP45LRyv7DGyLidoXOeKGbDdCzO7FMcK1OKgkCf3z3yP.VuVAe', 'Mauricio', 'Sayegh', 'mauriciosayegh7@gmail.com', '2025-04-16', '0937568644', NULL, 0, 20),
 (3, 'Mauricio_8', '$2y$10$u3KP2tbtHbw53yHHygT.iuq/oPMgMlbkd7Vx2gq1HL62TY/5tHdXO', 'Mauricio', 'Sayegh', 'mauriciosayegh@gmail.com', '2025-04-16', '0937568644', NULL, 0, 10),
 (4, 'bvcftyuiklm', '$2y$10$WWs5MbFgt2BrIPY6t8y6ZeD.h0cFnoFW0wRPcJIDnQ3WIhrYKVFRG', 'mnbvfrtyujm', '', 'mnbvfgy@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
 (5, 'nbgyuj', '$2y$10$42F9G6x9R2ROup7LS9yHu./e20f25g.hbOq2d2dozJCUgL23HZLgS', 'lkjbgyj', '', 'mnbvftyuj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
@@ -131,7 +131,7 @@ CREATE TABLE `question` (
   `professor_ID` int(11) NOT NULL,
   `subject_ID` int(11) NOT NULL,
   `question_text` text COLLATE utf8_unicode_ci NOT NULL,
-  `img_path` varchar(1024) COLLATE utf8_unicode_ci NOT NULL,
+  `img_path` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
   `difficulty` int(11) NOT NULL,
   `ans_A` text COLLATE utf8_unicode_ci NOT NULL,
   `is_correct_A` tinyint(1) NOT NULL,
@@ -148,6 +148,22 @@ CREATE TABLE `question` (
   `date` date NOT NULL,
   `mark` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `question`
+--
+
+INSERT INTO `question` (`question_ID`, `professor_ID`, `subject_ID`, `question_text`, `img_path`, `difficulty`, `ans_A`, `is_correct_A`, `ans_B`, `is_correct_B`, `ans_C`, `is_correct_C`, `ans_D`, `is_correct_D`, `ans_E`, `is_correct_E`, `group_num`, `is_sub`, `date`, `mark`) VALUES
+(1, 2, 3, 'احسب مشتق التابع \\( f(x) = x^2\\) وأوجد نهايته عند اللانهاية \\(\\lim_{x \\to \\infty}f(x)\\)', NULL, 2, '14', 0, '15', 0, '16', 1, '17', 0, '17', 0, 1, 0, '2025-04-24', 1),
+(2, 2, 3, 'Please calculate \\(\\int f(x)dx\\)', NULL, 1, '13', 0, '14', 1, '15', 0, '16', 0, '', 0, 2, 0, '2025-04-26', 2),
+(3, 2, 3, 'Test', NULL, 3, '13', 0, '14', 1, '15', 0, '16', 0, '17', 0, 3, 0, '2025-05-15', 3),
+(4, 2, 3, 'Test2', NULL, 3, '1', 1, '2', 0, '3', 0, '4', 0, '5', 0, 3, 0, '2025-05-15', 3),
+(5, 2, 3, 'Test3', NULL, 3, '1', 0, '2', 0, '3', 1, '4', 0, '5', 0, 4, 1, '2025-05-15', 1),
+(6, 2, 3, 'test4', NULL, 3, '1', 1, '2', 0, '3', 0, '4', 0, '5', 0, 5, 0, '2025-05-15', 1),
+(7, 2, 3, 'Hello!', NULL, 1, '1', 1, '2', 0, '3', 0, '4', 0, '', 0, 6, 1, '2025-05-22', 2),
+(8, 2, 3, 'Find the inverse of the following matrix: \\(\\begin{bmatrix} 1 & 3 & 4 \\\\ 5 & 2 & 1 \\\\ 6 & 8 & 1 \\end{bmatrix}\\)', NULL, 3, 'There is no inverse for this matrix', 1, '\\[\\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9  \\end{pmatrix}\\]', 0, '0', 0, '0', 0, '', 0, 7, 1, '2025-05-23', 4),
+(9, 2, 3, 'Solve for \\(x \\) in the equation \\(2x+6 = 0 \\)', NULL, 1, '-1', 0, '-2', 0, '-3', 1, '3', 0, '', 0, 8, 1, '2025-05-23', 1),
+(10, 2, 3, '\\(x=3+6 \\) what is the value of x?', NULL, 1, '7', 0, '9', 1, '8', 0, '10', 0, '0', 0, 9, 0, '2025-05-23', 1);
 
 -- --------------------------------------------------------
 
@@ -169,11 +185,11 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`subject_ID`, `university_ID`, `professor_ID`, `subject_name`, `total_mark`, `duration`) VALUES
-(6, 1, 2, 'برمجة 2', 70, 'ساعة ونصف'),
-(3, 1, 2, 'خوارزميات1', 70, 'ساعة ونص'),
-(7, 1, 2, 'خوارزميات 2', 70, 'ساعة'),
-(8, 1, 2, 'برمجة منطقية', 70, 'ساعتين ونص'),
-(9, 1, 2, 'أمن معلومات', 70, 'ساعة');
+(6, 1, 2, 'Programming -2-', 70, 'ساعة ونصف'),
+(3, 1, 2, 'Algorithms -1-', 70, '90 minuts'),
+(7, 1, 2, 'Algorithms -2-', 70, 'ساعة'),
+(8, 1, 2, 'Programming in Logic', 70, 'ساعتين ونص'),
+(9, 1, 2, 'Cyber Security ', 70, 'ساعة');
 
 -- --------------------------------------------------------
 
@@ -191,6 +207,13 @@ CREATE TABLE `token_transactions` (
   `status` enum('pending','completed','failed') COLLATE utf8_unicode_ci DEFAULT 'pending',
   `payment_reference` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `token_transactions`
+--
+
+INSERT INTO `token_transactions` (`transaction_id`, `professor_id`, `tokens_purchased`, `amount_paid`, `payment_method`, `transaction_date`, `status`, `payment_reference`) VALUES
+(1, 2, 10, '4.99', NULL, '2025-05-04 13:59:43', 'completed', NULL);
 
 -- --------------------------------------------------------
 
@@ -308,12 +331,12 @@ ALTER TABLE `professor`
 -- AUTO_INCREMENT for table `professor_university`
 --
 ALTER TABLE `professor_university`
-  MODIFY `prof_uni_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `prof_uni_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `question_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `question_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `subject`
 --
@@ -323,7 +346,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `token_transactions`
 --
 ALTER TABLE `token_transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `university`
 --

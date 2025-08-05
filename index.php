@@ -86,6 +86,7 @@ if (empty($_SESSION['user_id']) && isset($_COOKIE['remember_me'])) {
     // Invalid cookie, clear it
     setcookie('remember_me', '', time() - 3600, "/");
 }
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +95,7 @@ if (empty($_SESSION['user_id']) && isset($_COOKIE['remember_me'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="manifest" href="manifest.json"/> 
     <style>
         .error-message {
             color: #ff6b6b;
@@ -102,8 +104,12 @@ if (empty($_SESSION['user_id']) && isset($_COOKIE['remember_me'])) {
             border-radius: 5px;
             margin-bottom: 15px;
             font-size: 14px;
+
         }
+        
     </style>
+<script>navigator.serviceWorker.register("service-worker.js")</script>  
+       
 </head>
 <body>
     <div class="login-container">
@@ -134,6 +140,3 @@ if (empty($_SESSION['user_id']) && isset($_COOKIE['remember_me'])) {
     </div>
 </body>
 </html>
-<?php
-$conn->close();
-?>

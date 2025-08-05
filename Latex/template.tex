@@ -2,32 +2,47 @@
 \usepackage{amsmath}
 \usepackage{geometry}
 \usepackage{xcolor}
-\geometry{margin=1in}
+\usepackage{fancyhdr}
+\geometry{margin=0.7in}
 
-\title{<<SUBJECT>> - Exam}
-\author{University: <<UNIVERSITY>>}
-\date{Date: <<DATE>>}
-
-\pagestyle{empty}
+% Setup fancy headers
+\pagestyle{fancy}
+\fancyhf{} % Clear all header/footer fields
+\renewcommand{\headrulewidth}{0pt} % Remove header rule
+\cfoot{Page \thepage} % Add page numbering in the center footer
 
 % Define command for inline choices + marks
 \newcommand{\choice}[3]{%
     \textbf{#1}.~#2\hfill%
     \ifx&#3&%
     \else%
-        \rlap{\hspace{1em}[\textbf{#3 pts}]}%
+        \rlap{[\textbf{#3 pts}]}%
     \fi%
+    \vspace{0.3em} % Add spacing after each question
 }
 
 \begin{document}
-\maketitle
 
-\section*{Instructions}
-\begin{enumerate}
-    \item Answer all questions.
-    \item Select one correct answer per question.
-\end{enumerate}
+% Custom header with three parts
+\begin{minipage}[t]{0.3\textwidth}
+    \textbf{Date:} <<DATE>>\\[0.5em]
+    \textbf{Student Name: }\\[0.5em]
+    \textbf{Student Number: }
+\end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+    \centering
+    \Large\textbf{<<SUBJECT>>}\\[0.5em]
+    \Large{Model:} <<MODEL>>\\[0.5em]
+\end{minipage}\hfill
+\begin{minipage}[t]{0.3\textwidth}
+    \raggedleft
+    <<UNIVERSITY>>\\[0.5em]
+    \textbf{Duration: }<<DURATION>>
 
-<<QUESTIONS>>
+\end{minipage}
+
+\vspace{1.5cm}
+
+\section*{\small Select the correct answer for each question:}<<QUESTIONS>>
 
 \end{document}

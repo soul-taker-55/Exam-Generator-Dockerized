@@ -405,7 +405,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['clear_test_paper'])) {
             </div>
             
             <div class="test-paper">
-                <h2>Test Paper Preview (<?php echo count($_SESSION['test_paper_questions']); ?> questions)</h2>
+                <h2>Add Questions to the Same Group (<?php echo count($_SESSION['test_paper_questions']); ?> questions)</h2>
                 
                 <?php if (empty($_SESSION['test_paper_questions'])): ?>
                     <p class="empty-message">No questions added to test paper yet.</p>

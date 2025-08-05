@@ -304,12 +304,13 @@ $conn->close();
                     </div>
                 <?php else: ?>
                     <div class="questions-container">
+                        <?php $current_question_number = ($page - 1) * $questions_per_page + 1; ?>
                         <?php foreach ($questions as $question): ?>
                             <div class="question-card" data-id="<?php echo $question['question_ID']; ?>">
                                 <div class="card-header">
                                     <input type="checkbox" class="question-checkbox" 
                                            value="<?php echo $question['question_ID']; ?>">
-                                    <span class="question-id">#<?php echo $question['question_ID']; ?></span>
+                                    <span class="question-id">#<?php echo $current_question_number; ?></span>
                                     <span class="difficulty-badge difficulty-<?php echo $question['difficulty']; ?>">
                                         <?php echo ['Easy', 'Medium', 'Hard'][$question['difficulty'] - 1]; ?>
                                     </span>
@@ -338,6 +339,7 @@ $conn->close();
                                     </div>
                                 </div>
                             </div>
+                        <?php $current_question_number++; ?>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>

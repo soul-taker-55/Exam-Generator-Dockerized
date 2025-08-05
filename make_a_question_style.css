@@ -189,7 +189,9 @@ textarea, input[type="text"] {
 
 textarea {
     min-height: 80px;
-    resize: vertical;
+    min-width: 500px;
+    max-width: 98%;
+    resize:both;
 }
 
 .choice-item {

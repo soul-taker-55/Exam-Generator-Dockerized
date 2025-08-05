@@ -59,6 +59,7 @@ $stmt->close();
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="my_subject.css">
 </head>
+
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
@@ -197,9 +198,14 @@ $stmt->close();
                     <input type="text" id="duration" name="duration" placeholder="e.g. 2 hours" required>
                 </div>
                 
+                <button type="cancel" class="cancel-btn">
+                    <i class="fas fa-cancel"></i> Cancel
+                </button>
+
                 <button type="submit" class="submit-btn">
                     <i class="fas fa-save"></i> Save Subject
                 </button>
+
             </form>
         </div>
     </div>
@@ -227,8 +233,12 @@ $stmt->close();
                     <input type="text" id="editDuration" name="duration" required>
                 </div>
                 
+                <button type="cancel" class="cancel-btn">
+                    <i class="fas fa-cancel"></i> Cancel
+                </button>
+
                 <button type="submit" class="submit-btn">
-                    <i class="fas fa-save"></i> Update Subject
+                    <i class="fas fa-save"></i> Save Subject
                 </button>
             </form>
         </div>
