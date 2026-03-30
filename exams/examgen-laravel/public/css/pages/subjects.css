@@ -1,0 +1,6 @@
+/* Subjects */
+.subjects-toolbar{display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px}
+.subjects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.subject-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+.subject-card h3{margin:0 0 8px}
+.subject-meta{font-size:.9rem;color:var(--muted)}

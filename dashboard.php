@@ -121,6 +121,8 @@ $stmt->close();
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="music_player.css">
+
     <script>
     MathJax = {
         tex: {
@@ -198,6 +200,12 @@ $stmt->close();
                     <i class="fas fa-user-cog"></i>
                     <span>Profile</span>
                 </a>
+
+                <a href="#" id="music-btn">
+                <i class="fas fa-music"></i>
+                <span>Music</span>
+                </a>
+
                 <a href="logout.php" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
@@ -328,6 +336,9 @@ $stmt->close();
             }
         });
     </script>
+
+    <script defer src="music_player.js"></script>
+
 </body>
 </html>
 <?php

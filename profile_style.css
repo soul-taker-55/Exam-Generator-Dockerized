@@ -253,3 +253,5 @@ h2 {
 #phone {
     width: 95%;
 }
+
+#current_password, #new_password, #confirm_password { width: 95%; }

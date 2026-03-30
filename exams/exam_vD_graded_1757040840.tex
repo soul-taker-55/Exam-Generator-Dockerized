@@ -1,0 +1,138 @@
+\documentclass[12pt]{article}
+
+% هوامش
+\usepackage{geometry}
+\geometry{margin=0.8in}
+
+% ألوان/رؤوس/تذييل/تباعد
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage[inline]{enumitem}
+
+% دعم يونيكود ولغات (XeLaTeX)
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{bidi} % لدعم LTR/RTL
+
+\usepackage{etoolbox} % \ifstrempty لاختبار الفراغ
+
+% Math
+\usepackage{amsmath, amssymb, mathtools}
+
+% (احتياط)
+\usepackage{tabularx, ragged2e, array}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+% عنوان السؤال بجانب الرقم — غير قابل للانقسام (بدون بيئة داخل \mbox)
+\newcommand{\qheader}[1]{%
+  \mbox{\textenglish{\textbf{#1.\ Question~#1}}}\enspace
+}
+
+% خيارات سطرية A., B., C., D., E. مع التفاف تلقائي
+% جعل القائمة كلها LTR كي لا ينعكس ترتيب الكلمات الإنجليزية
+\newcommand{\renderchoices}[5]{%
+  \begin{LTR}%
+  \begin{enumerate*}[%
+    label=\textbf{\textenglish{\Alph*.}},
+    itemjoin=\hspace{2em},
+    itemsep=0.25em,
+    leftmargin=0pt
+  ]%
+    \ifstrempty{#1}{}{\item #1}%
+    \ifstrempty{#2}{}{\item #2}%
+    \ifstrempty{#3}{}{\item #3}%
+    \ifstrempty{#4}{}{\item #4}%
+    \ifstrempty{#5}{}{\item #5}%
+  \end{enumerate*}%
+  \end{LTR}\par
+}
+
+\setmainlanguage[numerals=western]{arabic}
+\setotherlanguage{english}
+
+% الخطوط
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.05]{Amiri}
+\newfontfamily\englishfont{Times New Roman}
+
+% ترويسة/تذييل
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\textenglish{Page } \thepage}
+
+% فقرات
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+% ======= Header (fixed layout) =======
+\noindent
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l c r}
+\textenglish{Date: {\begin{LTR}{\textenglish{September 4, 2025}}\end{LTR}}} &
+{\Large \textbf{{\textenglish{Algorithms -1-}}}} &
+\textenglish{{\begin{LTR}{\textenglish{University Of Aleppo}}\end{LTR}}} \\
+\textenglish{Student Name:} &
+\textenglish{Model: {\begin{LTR}{\textenglish{D}}\end{LTR}}} &
+\textenglish{\textbf{Duration:} {\begin{LTR}{\textenglish{90 minuts}}\end{LTR}}} \\
+\textenglish{Student Number:} & &
+\end{tabular*}
+
+\vspace{0.9cm}
+
+\section*{\begin{LTR}\textenglish{Select the correct answer for each question:}\end{LTR}}
+\setstretch{1.25}
+
+\noindent \qheader{1} \begin{LTR}{\textenglish{Test2}}\end{LTR}
+
+\renderchoices{\underline{\begin{LTR}{\textenglish{1}}\end{LTR}}}{\begin{LTR}{\textenglish{2}}\end{LTR}}{\begin{LTR}{\textenglish{3}}\end{LTR}}{\begin{LTR}{\textenglish{4}}\end{LTR}}{\begin{LTR}{\textenglish{5}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[3 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{2} \begin{LTR}{\textenglish{Test3}}\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{1}}\end{LTR}}{\begin{LTR}{\textenglish{2}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{3}}\end{LTR}}}{\begin{LTR}{\textenglish{4}}\end{LTR}}{\begin{LTR}{\textenglish{5}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{3} \begin{LTR}{\textenglish{Hello!}}\end{LTR}
+
+\renderchoices{\underline{\begin{LTR}{\textenglish{1}}\end{LTR}}}{\begin{LTR}{\textenglish{2}}\end{LTR}}{\begin{LTR}{\textenglish{3}}\end{LTR}}{\begin{LTR}{\textenglish{4}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[2 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{4} \begin{LTR}{\textenglish{Test}}\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{13}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{14}}\end{LTR}}}{\begin{LTR}{\textenglish{15}}\end{LTR}}{\begin{LTR}{\textenglish{16}}\end{LTR}}{\begin{LTR}{\textenglish{17}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[3 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{5} \begin{LTR}{\textenglish{Please calculate }}\(\int f(x)dx\)\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{13}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{14}}\end{LTR}}}{\begin{LTR}{\textenglish{15}}\end{LTR}}{\begin{LTR}{\textenglish{16}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[2 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{6} \begin{LTR}\(x=3+6 \){\textenglish{ what is the value of x?}}\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{7}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{9}}\end{LTR}}}{\begin{LTR}{\textenglish{8}}\end{LTR}}{\begin{LTR}{\textenglish{10}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{7} {\textarabic{احسب مشتق التابع }}\( f(x) = x^2\){\textarabic{ وأوجد نهايته عند اللانهاية }}\(\lim_{x \to \infty}f(x)\)
+
+\renderchoices{\begin{LTR}{\textenglish{14}}\end{LTR}}{\begin{LTR}{\textenglish{15}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{16}}\end{LTR}}}{\begin{LTR}{\textenglish{17}}\end{LTR}}{\begin{LTR}{\textenglish{17}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{8} \begin{LTR}{\textenglish{Solve for }}\(x \){\textenglish{ in the equation }}\(2x+6 = 0 \)\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{-1}}\end{LTR}}{\begin{LTR}{\textenglish{-2}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{-3}}\end{LTR}}}{\begin{LTR}{\textenglish{3}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{9} \begin{LTR}{\textenglish{test4}}\end{LTR}
+
+\renderchoices{\underline{\begin{LTR}{\textenglish{1}}\end{LTR}}}{\begin{LTR}{\textenglish{2}}\end{LTR}}{\begin{LTR}{\textenglish{3}}\end{LTR}}{\begin{LTR}{\textenglish{4}}\end{LTR}}{\begin{LTR}{\textenglish{5}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{10} \begin{LTR}{\textenglish{Find the inverse of the following matrix: }}\(\begin{bmatrix} 1 & 3 & 4 \\ 5 & 2 & 1 \\ 6 & 8 & 1 \end{bmatrix}\)\end{LTR}
+
+\renderchoices{\underline{\begin{LTR}{\textenglish{There is no inverse for this matrix}}\end{LTR}}}{\begin{LTR}\(\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9  \end{pmatrix}\)\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[4 Points]}\end{LTR}}\par\vspace{0.5em}
+
+
+
+\end{document}

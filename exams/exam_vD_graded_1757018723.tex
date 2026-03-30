@@ -1,0 +1,148 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry}
+\geometry{margin=0.8in}
+
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{multicol}
+\columnsep=1.0cm % مسافة بين العمودين (بدون خط)
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage[numerals=western]{arabic}
+\setotherlanguage{english}
+
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.05]{Amiri}
+\newfontfamily\englishfont{Times New Roman}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\textenglish{Page } \thepage}
+
+\newcommand{\choice}[3]{%
+  \noindent\textbf{#1}.~#2\hfill#3\par\vspace{0.25em}
+}
+
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{flushright}
+{\Large \textbf{{\textenglish{Algorithms -1-}}}}\\[0.25em]
+{\normalsize \textenglish{Model: }{\textenglish{D}}}\\[0.1em]
+{\normalsize \textenglish{Date: }{\textenglish{September 4, 2025}}}
+\end{flushright}
+
+\vspace{0.6cm}
+
+\noindent
+\begin{minipage}[t]{0.65\textwidth}
+  \raggedright
+  \textbf{{\textenglish{University of Aleppo}}}\\[0.3em]
+\end{minipage}\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \raggedleft
+  \textenglish{\textbf{Duration: }}{\textenglish{90 minuts}}
+\end{minipage}
+
+\vspace{0.9cm}
+
+\section*{اختر الإجابة الصحيحة لكل سؤال}
+\setstretch{1.2}
+
+\begin{multicols}{2}
+\noindent \textbf{\textenglish{1.}} {\textenglish{Hello!}}
+
+\noindent\choice{A}{\underline{{\textenglish{1}}}}{}
+\noindent\choice{B}{{\textenglish{2}}}{}
+\noindent\choice{C}{{\textenglish{3}}}{}
+\noindent\choice{D}{{\textenglish{4}}}{}
+\hfill {\textenglish{[2 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{2.}} \(x=3+6 \){\textenglish{ what is the value of x?}}
+
+\noindent\choice{A}{{\textenglish{7}}}{}
+\noindent\choice{B}{\underline{{\textenglish{9}}}}{}
+\noindent\choice{C}{{\textenglish{8}}}{}
+\noindent\choice{D}{{\textenglish{10}}}{}
+\noindent\choice{E}{{\textenglish{0}}}{}
+\hfill {\textenglish{[1 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{3.}} {\textenglish{Find the inverse of the following matrix: }}\(\begin{bmatrix} 1 & 3 & 4 \\ 5 & 2 & 1 \\ 6 & 8 & 1 \end{bmatrix}\)
+
+\noindent\choice{A}{\underline{{\textenglish{There is no inverse for this matrix}}}}{}
+\noindent\choice{B}{\[\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9  \end{pmatrix}\]}{}
+\noindent\choice{C}{{\textenglish{0}}}{}
+\noindent\choice{D}{{\textenglish{0}}}{}
+\hfill {\textenglish{[4 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{4.}} {\textenglish{Please calculate }}\(\int f(x)dx\)
+
+\noindent\choice{A}{{\textenglish{13}}}{}
+\noindent\choice{B}{\underline{{\textenglish{14}}}}{}
+\noindent\choice{C}{{\textenglish{15}}}{}
+\noindent\choice{D}{{\textenglish{16}}}{}
+\hfill {\textenglish{[2 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{5.}} {\textenglish{test4}}
+
+\noindent\choice{A}{\underline{{\textenglish{1}}}}{}
+\noindent\choice{B}{{\textenglish{2}}}{}
+\noindent\choice{C}{{\textenglish{3}}}{}
+\noindent\choice{D}{{\textenglish{4}}}{}
+\noindent\choice{E}{{\textenglish{5}}}{}
+\hfill {\textenglish{[1 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{6.}} {\textenglish{Solve for }}\(x \){\textenglish{ in the equation }}\(2x+6 = 0 \)
+
+\noindent\choice{A}{{\textenglish{-1}}}{}
+\noindent\choice{B}{{\textenglish{-2}}}{}
+\noindent\choice{C}{\underline{{\textenglish{-3}}}}{}
+\noindent\choice{D}{{\textenglish{3}}}{}
+\hfill {\textenglish{[1 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{7.}} {\textarabic{احسب مشتق التابع }}\( f(x) = x^2\){\textarabic{ وأوجد نهايته عند اللانهاية }}\(\lim_{x \to \infty}f(x)\)
+
+\noindent\choice{A}{{\textenglish{14}}}{}
+\noindent\choice{B}{{\textenglish{15}}}{}
+\noindent\choice{C}{\underline{{\textenglish{16}}}}{}
+\noindent\choice{D}{{\textenglish{17}}}{}
+\noindent\choice{E}{{\textenglish{17}}}{}
+\hfill {\textenglish{[1 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{8.}} {\textenglish{Test2}}
+
+\noindent\choice{A}{\underline{{\textenglish{1}}}}{}
+\noindent\choice{B}{{\textenglish{2}}}{}
+\noindent\choice{C}{{\textenglish{3}}}{}
+\noindent\choice{D}{{\textenglish{4}}}{}
+\noindent\choice{E}{{\textenglish{5}}}{}
+\hfill {\textenglish{[3 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{9.}} {\textenglish{Test3}}
+
+\noindent\choice{A}{{\textenglish{1}}}{}
+\noindent\choice{B}{{\textenglish{2}}}{}
+\noindent\choice{C}{\underline{{\textenglish{3}}}}{}
+\noindent\choice{D}{{\textenglish{4}}}{}
+\noindent\choice{E}{{\textenglish{5}}}{}
+\hfill {\textenglish{[1 points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{10.}} {\textenglish{Test}}
+
+\noindent\choice{A}{{\textenglish{13}}}{}
+\noindent\choice{B}{\underline{{\textenglish{14}}}}{}
+\noindent\choice{C}{{\textenglish{15}}}{}
+\noindent\choice{D}{{\textenglish{16}}}{}
+\noindent\choice{E}{{\textenglish{17}}}{}
+\hfill {\textenglish{[3 points]}}\\[0.5em]
+
+
+\end{multicols}
+
+\end{document}

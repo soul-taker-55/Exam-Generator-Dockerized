@@ -1,338 +1,227 @@
 // Track the last focused input/textarea
 let lastFocusedElement = null;
-        
-// Set up event listeners to track focus
-document.addEventListener('DOMContentLoaded', function() {
-    const textInputs = document.querySelectorAll('textarea, input[type="text"]');
-    textInputs.forEach(input => {
-        input.addEventListener('focus', function() {
-            lastFocusedElement = this;
-        });
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Track focus for all text inputs
+  const textInputs = document.querySelectorAll('textarea, input[type="text"]');
+  textInputs.forEach(input => {
+    input.addEventListener('focus', function () {
+      lastFocusedElement = this;
     });
-    
-    // Initialize with one choice
+  });
+
+  // Initialize with one choice only if none exist
+  const choicesContainer = document.getElementById('choicesContainer');
+  if (choicesContainer && choicesContainer.querySelectorAll('.choice-item').length === 0) {
     addChoice();
+  }
+
+  // Wire category headers only (no handler on the whole .category)
+  document.querySelectorAll('.category-header').forEach(header => {
+    header.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const cat = this.closest('.category');
+      toggleCategory(cat);
+    });
+  });
+
+  // Prevent clicks inside symbol panels from bubbling up
+  document.querySelectorAll('.symbol-panel').forEach(panel => {
+    panel.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+  });
+
+  // Outside click closes all categories
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.category') && !e.target.closest('.sidebar-header')) {
+      document.querySelectorAll('.category').forEach(cat => cat.classList.remove('active'));
+    }
+  });
 });
 
 // Toggle sidebar expansion
 function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('collapsed');
-    
-    // Change icon
-    const icon = document.querySelector('.toggle-sidebar i');
-    if (sidebar.classList.contains('collapsed')) {
-        icon.classList.remove('fa-chevron-left');
-        icon.classList.add('fa-chevron-right');
-    } else {
-        icon.classList.remove('fa-chevron-right');
-        icon.classList.add('fa-chevron-left');
-    }
+  const sidebar = document.querySelector('.sidebar');
+  if (!sidebar) return;
+
+  sidebar.classList.toggle('collapsed');
+
+  // Change chevron icon
+  const icon = document.querySelector('.toggle-sidebar i');
+  if (icon) {
+    const collapsed = sidebar.classList.contains('collapsed');
+    icon.classList.toggle('fa-chevron-left', !collapsed);
+    icon.classList.toggle('fa-chevron-right', collapsed);
+  }
 }
 
-// Toggle category expansion
+// Toggle category expansion (accordion-like close-others)
 function toggleCategory(categoryElement) {
-    // Close all other categories first if they're not in the same parent
-    if (!categoryElement.classList.contains('active')) {
-        document.querySelectorAll('.category').forEach(cat => {
-            if (cat !== categoryElement) {
-                cat.classList.remove('active');
-            }
-        });
-    }
-    
-    // Toggle the clicked category
-    categoryElement.classList.toggle('active');
-    
-    // Prevent the click from propagating to document
-    event.stopPropagation();
+  if (!categoryElement) return;
+
+  // Close others
+  document.querySelectorAll('.category').forEach(cat => {
+    if (cat !== categoryElement) cat.classList.remove('active');
+  });
+
+  // Toggle this one
+  categoryElement.classList.toggle('active');
 }
 
-function insertSymbolIntoField(fieldId, symbol) {
-    // Handle both ID strings and element references
-    const field = typeof fieldId === 'string' ? document.getElementById(fieldId) : fieldId;
-    
-    if (!field) return;
-    
-    field.focus();
-    
-    // Special handling for equation delimiters
-    if (symbol === '\\[ \\]') {
-        const cursorPos = field.selectionStart;
-        const currentValue = field.value;
-        
-        // Insert the delimiters with space between them
-        field.value = currentValue.substring(0, cursorPos) + '\\[ \\]' + currentValue.substring(cursorPos);
-        
-        // Position cursor between the brackets (after '\\[')
-        field.selectionStart = field.selectionEnd = cursorPos + 2;
-    } else {
-        // Regular symbol insertion
-        insertSymbol(symbol);
-    }
-    
+// Insert \[ \] into a specific field (accepts id OR a DOM element)
+function insertSymbolIntoField(fieldIdOrEl, symbol) {
+  const field = typeof fieldIdOrEl === 'string'
+    ? (document.getElementById(fieldIdOrEl) ||
+       document.querySelector(`textarea[name="${fieldIdOrEl}"], input[name="${fieldIdOrEl}"]`))
+    : fieldIdOrEl;
+
+  if (!field) return;
+
+  field.focus();
+
+  if (symbol === '\\[ \\]') {
+    const cursorPos = field.selectionStart || 0;
+    const currentValue = field.value || '';
+    field.value = currentValue.substring(0, cursorPos) + '\\[ \\]' + currentValue.substring(cursorPos);
+    field.selectionStart = field.selectionEnd = cursorPos + 2; // place cursor inside
     updatePreview();
+    return;
+  }
+
+  insertSymbol(symbol);
 }
 
-
+// Insert symbol at current caret of the last focused element
 function insertSymbol(symbol) {
-    if (!lastFocusedElement) return;
+  if (!lastFocusedElement) return;
 
-    const cursorPos = lastFocusedElement.selectionStart;
-    let currentValue = lastFocusedElement.value;
-    let textBefore = currentValue.substring(0, cursorPos);
-    let textAfter = currentValue.substring(cursorPos);
+  const el = lastFocusedElement;
+  const cursorPos = el.selectionStart || 0;
+  const val = el.value || '';
+  const before = val.substring(0, cursorPos);
+  const after = val.substring(cursorPos);
 
-    // Special handling for equation delimiters
-    if (symbol === '\\[ \\]') {
-        lastFocusedElement.value = textBefore + '\\[ \\]' + textAfter;
-        lastFocusedElement.selectionStart = lastFocusedElement.selectionEnd = cursorPos + 2;
-        lastFocusedElement.focus();
-        updatePreview();
-        return;
-    }
-
-    // Check if we're inside existing \[ \]
-    const lastOpen = textBefore.lastIndexOf('\\[');
-    const lastClose = textBefore.lastIndexOf('\\]');
-    const isInsideEquation = lastOpen > lastClose;
-
-    // If we're inside an equation OR the symbol already has delimiters, insert raw
-    if (isInsideEquation || symbol.startsWith('\\[') || symbol.startsWith('\\(')) {
-        lastFocusedElement.value = textBefore + symbol + textAfter;
-    } 
-    // Otherwise, wrap with delimiters
-    else {
-        lastFocusedElement.value = textBefore + `\\[${symbol}\\]` + textAfter;
-    }
-
-    // Position cursor after inserted symbol
-    lastFocusedElement.selectionStart = lastFocusedElement.selectionEnd = 
-        cursorPos + (isInsideEquation ? symbol.length : symbol.length + 4);
-    
-    lastFocusedElement.focus();
+  if (symbol === '\\[ \\]') {
+    el.value = before + '\\[ \\]' + after;
+    el.selectionStart = el.selectionEnd = cursorPos + 2;
+    el.focus();
     updatePreview();
+    return;
+  }
+
+  // Are we already inside \[ ... \] ?
+  const lastOpen = before.lastIndexOf('\\[');
+  const lastClose = before.lastIndexOf('\\]');
+  const insideEquation = lastOpen > lastClose;
+
+  if (insideEquation || symbol.startsWith('\\[') || symbol.startsWith('\\(')) {
+    el.value = before + symbol + after;
+    el.selectionStart = el.selectionEnd = cursorPos + symbol.length;
+  } else {
+    const wrapped = `\\[${symbol}\\]`;
+    el.value = before + wrapped + after;
+    el.selectionStart = el.selectionEnd = cursorPos + wrapped.length;
+  }
+
+  el.focus();
+  updatePreview();
 }
 
 // Add a new choice field
 function addChoice() {
-    const choicesContainer = document.getElementById('choicesContainer');
-    const choiceCount = choicesContainer.children.length;
-    const choiceName = `choices[${choiceCount}]`;
-    
-    const choiceDiv = document.createElement('div');
-    choiceDiv.className = 'choice-item';
-    choiceDiv.innerHTML = `
-        <input type="radio" name="correct_answer" value="${choiceCount}">
-        <input type="text" id="${choiceName}" name="${choiceName}" placeholder="Enter choice ${choiceCount + 1}..." oninput="updatePreview()">
-        <div style="margin-left: 10px;">
-            <button type="button" class="symbol-button" onclick="insertSymbolIntoField('${choiceName}', '\\\\[ \\\\]')">
-                <i class="fas fa-plus"></i> Eq
-            </button>
-            <button type="button" class="symbol-button clear-btn" onclick="this.parentElement.parentElement.remove(); updatePreview()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    `;
-    
-    choicesContainer.appendChild(choiceDiv);
-    
-    // Focus on the new choice input and track it
-    const newInput = document.getElementById(choiceName);
+  const choicesContainer = document.getElementById('choicesContainer');
+  if (!choicesContainer) return;
+
+  const count = choicesContainer.querySelectorAll('.choice-item').length;
+  if (count >= 5) { alert('Maximum 5 choices (A–E).'); return; }
+
+  const name = `choices[${count}]`;
+
+  const choiceDiv = document.createElement('div');
+  choiceDiv.className = 'choice-item';
+  choiceDiv.innerHTML = `
+    <input type="radio" id="correct_${count}" name="correct_answer" value="${count}">
+    <input type="text" id="${name}" name="${name}" placeholder="Enter choice ${count + 1}..." oninput="updatePreview()">
+    <div style="margin-left: 10px;">
+      <button type="button" class="symbol-button" onclick="insertSymbolIntoField('${name}', '\\\\[ \\\\]')">
+        <i class="fas fa-plus"></i> Eq
+      </button>
+      <button type="button" class="symbol-button clear-btn" onclick="this.parentElement.parentElement.remove(); renumberChoices(); updatePreview()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  `;
+
+  choicesContainer.appendChild(choiceDiv);
+
+  // Track focus on the new input
+  const newInput = document.getElementById(name);
+  if (newInput) {
     lastFocusedElement = newInput;
-    
-    // Add focus event listener to the new input
-    newInput.addEventListener('focus', function() {
-        lastFocusedElement = this;
-    });
-    
-    // Add change listener for radio buttons
-    const radioInput = choiceDiv.querySelector('input[type="radio"]');
-    radioInput.addEventListener('change', updatePreview);
+    newInput.addEventListener('focus', function () { lastFocusedElement = this; });
+  }
+
+  // Update preview when picking correct answer
+  const radio = choiceDiv.querySelector('input[type="radio"]');
+  if (radio) radio.addEventListener('change', updatePreview);
 }
 
-// Update the live preview
+// Re-number choices (after deletion)
+function renumberChoices() {
+  const items = document.querySelectorAll('#choicesContainer .choice-item');
+  items.forEach((el, idx) => {
+    const r = el.querySelector('input[type="radio"]');
+    const t = el.querySelector('input[type="text"]');
+    if (r) { r.id = 'correct_' + idx; r.value = idx; }
+    if (t) { t.name = `choices[${idx}]`; t.id = `choices[${idx}]`; t.placeholder = `Enter choice ${idx + 1}...`; }
+  });
+}
+
+// Update the live preview (MathJax)
 function updatePreview() {
-    const questionText = document.getElementById('questionText').value.trim();
-    const previewDiv = document.getElementById('livePreview');
-    
-    if (!questionText) {
-        previewDiv.innerHTML = '<p class="empty-message">Your question will appear here as you type...</p>';
-        return;
+  const qEl = document.getElementById('questionText');
+  const previewDiv = document.getElementById('livePreview');
+  if (!qEl || !previewDiv) return;
+
+  const questionText = (qEl.value || '').trim();
+
+  if (!questionText) {
+    previewDiv.innerHTML = '<p class="empty-message">Your question will appear here as you type...</p>';
+    return;
+  }
+
+  const formattedQuestion = questionText.replace(/\\\[(.*?)\\\]/g, '<span class="inline-equation">\\($1\\)</span>');
+  let html = `<div class="question-text"><strong>Preview:</strong> ${formattedQuestion}</div>`;
+
+  // Choices
+  const choiceEls = document.querySelectorAll('#choicesContainer .choice-item');
+  const choices = [];
+  const correct = [];
+  choiceEls.forEach((choiceEl, index) => {
+    const t = choiceEl.querySelector('input[type="text"]');
+    const r = choiceEl.querySelector('input[type="radio"]');
+    if (t && (t.value || '').trim()) {
+      choices.push(t.value.trim());
+      if (r && r.checked) correct.push(index);
     }
-    
-    // Format question text with MathJax
-    const formattedQuestion = questionText.replace(/\\\[(.*?)\\\]/g, 
-        '<span class="inline-equation">\\($1\\)</span>');
-    
-    let previewHTML = `
-        <div class="question-text">
-            <strong>Preview:</strong> ${formattedQuestion}
-        </div>
+  });
+
+  if (choices.length > 0) {
+    html += `
+      <div class="choices-list">
+        ${choices.map((c, i) => {
+          const formatted = c.replace(/\\\[(.*?)\\\]/g, '<span class="inline-equation">\\($1\\)</span>');
+          return `<span class="${correct.includes(i) ? 'choice-correct' : ''}">${String.fromCharCode(65 + i)}. ${formatted}</span>`;
+        }).join(' ')}
+      </div>
     `;
-    
-    // Add choices to preview if they exist
-    const choices = [];
-    const correctIndices = [];
-    const choiceElements = document.querySelectorAll('#choicesContainer .choice-item');
-    
-    choiceElements.forEach((choiceEl, index) => {
-        const choiceInput = choiceEl.querySelector('input[type="text"]');
-        const choiceRadio = choiceEl.querySelector('input[type="radio"]');
-        
-        if (choiceInput.value.trim()) {
-            choices.push(choiceInput.value.trim());
-            if (choiceRadio.checked) {
-                correctIndices.push(index);
-            }
-        }
-    });
-    
-    if (choices.length > 0) {
-        previewHTML += `
-            <div class="choices-list">
-                ${choices.map((choice, index) => {
-                    const formattedChoice = choice.replace(/\\\[(.*?)\\\]/g, 
-                        '<span class="inline-equation">\\($1\\)</span>');
-                    return `
-                        <span class="${correctIndices.includes(index) ? 'choice-correct' : ''}">
-                            ${String.fromCharCode(65 + index)}. ${formattedChoice}
-                        </span>
-                    `;
-                }).join(' ')}
-            </div>
-        `;
-    }
-    
-    previewDiv.innerHTML = previewHTML;
-    
-    // Render MathJax for the preview
+  }
+
+  previewDiv.innerHTML = html;
+
+  // Render MathJax for preview only
+  if (window.MathJax && MathJax.typesetPromise) {
     MathJax.typesetPromise([previewDiv]).catch(err => console.log(err));
+  }
 }
-
-// Add question to the test paper
-function addQuestionToTest() {
-    const questionText = document.getElementById('questionText').value.trim();
-    if (!questionText) {
-        alert('Please enter a question text');
-        return;
-    }
-    
-    const choices = [];
-    let correctAnswerIndex = -1;
-    const choiceElements = document.querySelectorAll('#choicesContainer .choice-item');
-    
-    if (choiceElements.length === 0) {
-        alert('Please add at least one choice');
-        return;
-    }
-    
-    choiceElements.forEach((choiceEl, index) => {
-        const choiceInput = choiceEl.querySelector('input[type="text"]');
-        const choiceRadio = choiceEl.querySelector('input[type="radio"]');
-        
-        if (choiceInput.value.trim()) {
-            choices.push(choiceInput.value.trim());
-            if (choiceRadio.checked) {
-                correctAnswerIndex = index;
-            }
-        }
-    });
-    
-    if (choices.length === 0) {
-        alert('Please enter at least one valid choice');
-        return;
-    }
-    
-    if (correctAnswerIndex === -1) {
-        alert('Please select the correct answer');
-        return;
-    }
-    
-    const testPaper = document.getElementById('testPaper');
-    const questionNumber = testPaper.querySelectorAll('.question-item').length + 1;
-    
-    // Replace \[ \] with \( \) for inline display and wrap with span
-    const formattedQuestion = questionText.replace(/\\\[(.*?)\\\]/g, 
-        '<span class="inline-equation">\\($1\\)</span>');
-    
-    const questionDiv = document.createElement('div');
-    questionDiv.className = 'question-item';
-    questionDiv.innerHTML = `
-        <div class="question-text">
-            <strong>Question ${questionNumber}:</strong> ${formattedQuestion}
-        </div>
-        <div class="choices-list">
-            ${choices.map((choice, index) => {
-                const formattedChoice = choice.replace(/\\\[(.*?)\\\]/g, 
-                    '<span class="inline-equation">\\($1\\)</span>');
-                return `
-                    <span class="${index === correctAnswerIndex ? 'choice-correct' : ''}">
-                        ${String.fromCharCode(65 + index)}. ${formattedChoice}
-                    </span>
-                `;
-            }).join(' ')}
-        </div>
-        <button class="symbol-button clear-btn" onclick="this.parentElement.remove(); renumberQuestions();" style="margin-top:10px;">
-            <i class="fas fa-trash"></i> Remove Question
-        </button>
-    `;
-    
-    // Remove empty message if it exists
-    const emptyMsg = testPaper.querySelector('.empty-message');
-    if (emptyMsg) {
-        emptyMsg.remove();
-    }
-    
-    testPaper.appendChild(questionDiv);
-    
-    // Clear the form
-    document.getElementById('questionText').value = '';
-    document.getElementById('choicesContainer').innerHTML = '';
-    
-    // Add one empty choice for the next question
-    addChoice();
-    
-    // Update preview to show empty state
-    updatePreview();
-    
-    // Render MathJax for the new question
-    MathJax.typesetPromise([questionDiv]).catch(err => console.log(err));
-}
-
-// Renumber questions after deletion
-function renumberQuestions() {
-    const questions = document.querySelectorAll('.question-item');
-    if (questions.length === 0) {
-        document.getElementById('testPaper').innerHTML = `
-            <p class="empty-message">No questions added yet. Start by creating a question above.</p>
-        `;
-        return;
-    }
-    
-    questions.forEach((question, index) => {
-        const questionText = question.querySelector('.question-text');
-        questionText.innerHTML = questionText.innerHTML.replace(
-            /Question \d+:/, 
-            `Question ${index + 1}:`
-        );
-    });
-}
-
-// Clear the entire test
-function clearTest() {
-    if (confirm('Are you sure you want to clear all questions?')) {
-        document.getElementById('testPaper').innerHTML = `
-            <p class="empty-message">No questions added yet. Start by creating a question above.</p>
-        `;
-    }
-}
-
-// Close all categories when clicking outside
-document.addEventListener('click', function(e) {
-    if (!e.target.closest('.category') && !e.target.closest('.sidebar-header')) {
-        document.querySelectorAll('.category').forEach(cat => {
-            cat.classList.remove('active');
-        });
-    }
-});

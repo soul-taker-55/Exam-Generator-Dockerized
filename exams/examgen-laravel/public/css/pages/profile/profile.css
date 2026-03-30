@@ -1,0 +1,109 @@
+/* ===== Profile page scoped only ===== */
+.profile-page{
+  --primary-color:#2c3e50; --secondary-color:#3498db;
+  --light-gray:#f5f7fa; --dark-gray:#333; --white:#fff;
+  --correct-color:#27ae60; --incorrect-color:#e74c3c; --warning-color:#f39c12;
+}
+
+/* الحاوية */
+.profile-page .profile-container{
+  max-width:980px; margin:0 auto; padding:20px;
+  background:var(--white); border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+/* أقسام الصفحة */
+.profile-page .profile-section,
+.profile-page .tokens-section,
+.profile-page .university-section{
+  margin-bottom:22px; padding:18px; background:var(--light-gray); border-radius:10px;
+}
+
+/* عناوين داخل صفحة البروفايل فقط */
+.profile-page h1,.profile-page h2,.profile-page h3{ color:var(--primary-color) }
+.profile-page h1{ margin:0 0 14px }
+.profile-page h2{ margin:0 0 14px; padding-bottom:8px; border-bottom:2px solid var(--secondary-color) }
+
+/* فورمات */
+.profile-page .form-group{ margin-bottom:12px }
+.profile-page .form-group label{ display:block; margin-bottom:6px; font-weight:700 }
+.profile-page .form-group input,
+.profile-page .university-select{
+  width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-size:15px;
+}
+
+/* أزرار هذه الصفحة فقط */
+.profile-page .btn{
+  padding:10px 16px; border:none; border-radius:8px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:8px; font-size:15px;
+}
+.profile-page .btn-primary{ background:var(--secondary-color); color:#fff }
+.profile-page .btn-primary:hover{ filter:brightness(.95) }
+.profile-page .btn-purchase{ background:var(--correct-color); color:#fff; width:100%; margin-top:12px }
+.profile-page .btn-purchase:hover{ filter:brightness(.95) }
+.profile-page .btn-add{ background:var(--correct-color); color:#fff }
+.profile-page .btn-add:hover{ filter:brightness(.95) }
+
+/* تنبيهات */
+.profile-page .alert{ padding:10px 12px; border-radius:8px; margin-bottom:12px }
+.profile-page .alert-success{ background:#d4edda; color:#155724; border:1px solid #c3e6cb }
+.profile-page .alert-error{ background:#f8d7da; color:#721c24; border:1px solid #f5c6cb }
+
+/* Tokens */
+.profile-page .token-balance{ text-align:center; margin-bottom:18px }
+.profile-page .balance-amount{
+  font-size:44px; font-weight:800; color:var(--primary-color);
+  display:flex; align-items:center; justify-content:center; gap:10px;
+}
+
+/* Packages */
+.profile-page .token-packages{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin-bottom:10px;
+}
+.profile-page .package{ display:block; cursor:pointer }
+.profile-page .package input{ display:none }
+.profile-page .package .card{
+  background:#fff; border:2px solid #eaeaea; border-radius:10px; padding:16px; text-align:center; transition:.15s;
+}
+.profile-page .package.active .card,
+.profile-page .package input:checked + .card{
+  border-color:var(--secondary-color); background:rgba(52,152,219,.06);
+}
+.profile-page .amount{ display:block; font-size:18px; font-weight:700; margin-bottom:4px }
+.profile-page .price{ color:var(--correct-color); font-weight:700 }
+
+/* Transactions */
+.profile-page .transaction-history table{ width:100%; border-collapse:collapse }
+.profile-page .transaction-history th,
+.profile-page .transaction-history td{
+  padding:10px; text-align:left; border-bottom:1px solid #eee;
+}
+.profile-page .transaction-history th{ background:#f0f4f8 }
+
+/* University */
+.profile-page .current-university-box{ margin-bottom:12px }
+.profile-page .university-list{ margin-top:8px }
+.profile-page .university-item{
+  display:flex; justify-content:space-between; align-items:center;
+  background:#fff; border:1px solid #eee; border-radius:8px; padding:10px 12px; margin-bottom:8px;
+}
+.profile-page .remove-university{ color:var(--incorrect-color); text-decoration:none; font-size:14px }
+
+/* Inputs width (مطابقة للسابق) */
+.profile-page #first_name,
+.profile-page #last_name,
+.profile-page #email,
+.profile-page #phone{ width:95% }
+
+/* Toast */
+.profile-page .toast-prof{
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(6px);
+  background:#222; color:#fff; padding:10px 14px; border-radius:10px; opacity:0; transition:.2s; z-index:9999;
+}
+.profile-page .toast-prof.show{ opacity:1; transform:translateX(-50%) translateY(0) }
+
+/* Responsive */
+@media (max-width:768px){
+  .profile-page .token-packages{ grid-template-columns:1fr }
+  .profile-page .university-select-wrapper{ display:flex; flex-direction:column; gap:10px }
+  .profile-page .btn-add{ width:100% }
+}

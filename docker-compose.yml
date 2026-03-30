@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "80:80"
+
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: exam_generator
+      MYSQL_USER: exam_user
+      MYSQL_PASSWORD: exam_pass123
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./exam_generator_db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  db_data:

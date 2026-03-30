@@ -1,0 +1,4 @@
+/* Questions */
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.tag{display:inline-block;padding:.2rem .5rem;background:#f3f4f6;border-radius:999px;margin-inline-end:6px;font-size:.85rem}
+.q-actions{display:flex;gap:8px;justify-content:flex-end;margin:12px 0}

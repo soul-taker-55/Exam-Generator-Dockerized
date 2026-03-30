@@ -1,0 +1,246 @@
+/* ===== Page shell / header ===== */
+.main-content {
+  padding: 20px;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 10px;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== Filter card (like exam-detail style) ===== */
+.table-card {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.filters .wide {
+  grid-column: span 2;
+}
+
+.filters input[type="text"],
+.filters input[type="date"],
+.filters select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(52,152,219,.15);
+}
+
+/* Controls row */
+.controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.controls-left {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.controls-left label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dark-gray);
+  font-size: 14px;
+}
+
+.controls-left select {
+  padding: 8px 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+}
+
+.controls-right {
+  display: flex;
+  gap: 8px;
+}
+
+/* Unified buttons (back-btn is already used in HTML) */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--secondary-color);
+  color: #fff;
+  font: 14px/1 inherit;
+  transition: filter .2s, background-color .2s, opacity .2s;
+}
+
+.back-btn:hover { filter: brightness(0.95); }
+
+.apply-btn { background: var(--secondary-color); }
+.reset-btn { background: var(--gray); }
+.reset-btn:hover { background: var(--dark-gray); }
+
+.back-btn:disabled,
+.back-btn.disabled {
+  opacity: .6;
+  pointer-events: none;
+}
+
+/* ===== Table wrapped like "question-card" look ===== */
+.table-responsive {
+  overflow-x: auto;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background: #fdfdfd;         /* مشابه للبطاقات */
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;            /* لمنع ضغط الأعمدة كثيرًا */
+}
+
+thead th {
+  background: #f8f9fa;
+  color: var(--primary-color);
+  font-weight: 700;
+  padding: 12px 14px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f1f1;
+  color: #444;
+}
+
+tbody tr:hover {
+  background: #f9fbff;
+}
+
+/* Status badge (same spirit as buttons in your palette) */
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.badge-success   { background: var(--correct-color); }
+.badge-info      { background: var(--secondary-color); }
+.badge-secondary { background: var(--dark-gray); }
+.badge-danger    { background: var(--incorrect-color); }
+
+/* Actions cell buttons */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.actions .back-btn {
+  padding: 8px 12px; /* أصغر قليلًا داخل الجدول */
+  border-radius: 6px;
+}
+
+/* Download busy state */
+.download-busy {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ===== Pagination styled like small pills ===== */
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.pagination a {
+  padding: 8px 12px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--primary-color);
+  font-size: 14px;
+  background: #fff;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+
+.pagination a:hover {
+  background: #f8f9fa;
+}
+
+.pagination a.active {
+  background: var(--secondary-color);
+  color: #fff;
+  border-color: var(--secondary-color);
+}
+
+.pagination a.disabled {
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* ===== Sidebar collapse nicety ===== */
+.sidebar.collapsed + .main-content {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+@media (max-width: 1100px) {
+  .filters { grid-template-columns: repeat(3, 1fr); }
+  .filters .wide { grid-column: span 3; }
+}
+
+@media (max-width: 768px) {
+  .main-content { padding: 15px; }
+  .filters { grid-template-columns: 1fr; }
+  .filters .wide { grid-column: auto; }
+  .controls { flex-direction: column; align-items: stretch; }
+  .controls-left { width: 100%; }
+  .controls-right { width: 100%; justify-content: stretch; }
+  .controls-right .back-btn { width: 100%; justify-content: center; }
+  .pagination { justify-content: center; }
+}
+
+/* ===== Optional RTL tweaks ===== */
+[dir="rtl"] thead th,
+[dir="rtl"] tbody td { text-align: right; }
+
+[dir="rtl"] .controls-left label { direction: rtl; }

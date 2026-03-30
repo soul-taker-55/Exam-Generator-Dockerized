@@ -135,7 +135,10 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="subject_questions.css">
+    <link rel="stylesheet" href="music_player.css">
     <script src="subject_questions.js"></script>
+    
+
     <script>
         MathJax = {
             tex: {
@@ -206,7 +209,12 @@ $conn->close();
                 <a href="profile.php">
                     <i class="fas fa-user-cog"></i>
                     <span>Profile</span>
+
+                <a href="#" id="music-btn">
+                <i class="fas fa-music"></i>
+                <span>Music</span>
                 </a>
+
                 <a href="logout.php" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
@@ -298,9 +306,6 @@ $conn->close();
                     <div class="no-questions">
                         <i class="fas fa-question-circle"></i>
                         <p>No questions found</p>
-                        <a href="add_question.php?subject_id=<?php echo $subject_id; ?>" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> Add Your First Question
-                        </a>
                     </div>
                 <?php else: ?>
                     <div class="questions-container">
@@ -423,5 +428,7 @@ $conn->close();
             </div>
         </div>
     </div>
+
+    <script defer src="music_player.js"></script>
 </body>
 </html>

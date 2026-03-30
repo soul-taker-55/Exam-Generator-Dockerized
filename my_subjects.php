@@ -58,6 +58,8 @@ $stmt->close();
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="my_subject.css">
+    <link rel="stylesheet" href="music_player.css">
+
 </head>
 
 <body>
@@ -114,6 +116,11 @@ $stmt->close();
                     <i class="fas fa-user-cog"></i>
                     <span>Profile</span>
                 </a>
+                <a href="#" id="music-btn">
+                    <i class="fas fa-music"></i>
+                    <span>Music</span>
+                </a>
+
                 <a href="logout.php" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
@@ -190,7 +197,7 @@ $stmt->close();
                 
                 <div class="form-group">
                     <label for="totalMark">Total Mark:</label>
-                    <input type="number" id="totalMark" name="totalMark" min="1" required>
+                    <input type="number" id="totalMark" name="totalMark" min="1" max="100" required>
                 </div>
                 
                 <div class="form-group">
@@ -376,6 +383,8 @@ $stmt->close();
             });
         }
     </script>
+
+    <script defer src="music_player.js"></script>
 </body>
 </html>
 <?php

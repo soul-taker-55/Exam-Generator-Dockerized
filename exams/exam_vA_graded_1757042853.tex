@@ -1,0 +1,137 @@
+\documentclass[12pt]{article}
+
+\usepackage{geometry}
+\geometry{margin=0.8in}
+
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage[inline]{enumitem}
+\usepackage{multicol}
+\columnsep=1.0cm
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{bidi}
+\usepackage{etoolbox}
+
+% Math
+\usepackage{amsmath, amssymb, mathtools}
+
+% (احتياط)
+\usepackage{tabularx, ragged2e, array}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+% عنوان السؤال
+\newcommand{\qheader}[1]{%
+  \par
+  \begin{LTR}\noindent\textenglish{\textbf{Question~#1}}\end{LTR}%
+  \par\vspace{0.2em}%
+}
+
+% خيارات سطرية — القائمة LTR
+\newcommand{\renderchoices}[5]{%
+  \begin{LTR}%
+  \begin{enumerate*}[
+    label=\textbf{\textenglish{\Alph*.}},
+    itemjoin=\hspace{2em},
+    itemsep=0.25em,
+    leftmargin=0pt
+  ]%
+    \ifstrempty{#1}{}{\item #1}%
+    \ifstrempty{#2}{}{\item #2}%
+    \ifstrempty{#3}{}{\item #3}%
+    \ifstrempty{#4}{}{\item #4}%
+    \ifstrempty{#5}{}{\item #5}%
+  \end{enumerate*}%
+  \end{LTR}\par
+}
+
+\setmainlanguage[numerals=western]{arabic}
+\setotherlanguage{english}
+
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.05]{Amiri}
+\newfontfamily\englishfont{Times New Roman}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\textenglish{Page } \thepage}
+
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+% ======= Header (fixed layout) =======
+\noindent
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l c r}
+\textenglish{Date: {\begin{LTR}{\textenglish{September 4, 2025}}\end{LTR}}} &
+{\Large \textbf{{\textenglish{Algorithms -1-}}}} &
+\textenglish{{\begin{LTR}{\textenglish{University Of Aleppo}}\end{LTR}}} \\
+\textenglish{Student Name:} &
+\textenglish{Model: {\begin{LTR}{\textenglish{A}}\end{LTR}}} &
+\textenglish{\textbf{Duration:} {\begin{LTR}{\textenglish{90 minuts}}\end{LTR}}} \\
+\textenglish{Student Number:} & &
+\end{tabular*}
+
+\vspace{0.9cm}
+
+\section*{\begin{LTR}\textenglish{Select the correct answer for each question:}\end{LTR}}
+\setstretch{1.2}
+
+\begin{multicols}{2}
+\noindent \qheader{1} {\textarabic{احسب مشتق التابع }}\( f(x) = x^2\){\textarabic{ وأوجد نهايته عند اللانهاية }}\(\lim_{x \to \infty}f(x)\)
+
+\renderchoices{\begin{LTR}{\textenglish{14}}\end{LTR}}{\begin{LTR}{\textenglish{15}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{16}}\end{LTR}}}{\begin{LTR}{\textenglish{17}}\end{LTR}}{\begin{LTR}{\textenglish{17}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{2} {\textarabic{ما هي الخوارزمية التي تستخدمها لتنظيم جوربك الملونة حسب اللون، ولكن فقط إذا كان لديك 3 جوارب؟}}
+
+\renderchoices{{\textarabic{خوارزمية الفرز السريع (Quick Sort)}}}{{\textarabic{ خوارزمية الفرز بالإدراج (Insertion Sort)}}}{\underline{\begin{LTR}{\textenglish{0}}\end{LTR}}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[5 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{3} \begin{LTR}{\textenglish{Calculate the following Equations:
+}}\[\begin{pmatrix} x & y & z \\ 2x & y & -z \\ x & -y & 2z  \end{pmatrix}\]{\textenglish{ = }}\[\begin{pmatrix} 6  \\ 1  \\ 5 \end{pmatrix}\]\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{5}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{25}}\end{LTR}}}{\begin{LTR}{\textenglish{-5}}\end{LTR}}{\begin{LTR}{\textenglish{-25}}\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[5 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{4} \begin{LTR}{\textenglish{Find the inverse of the following matrix: }}\(\begin{bmatrix} 1 & 3 & 4 \\ 5 & 2 & 1 \\ 6 & 8 & 1 \end{bmatrix}\)\end{LTR}
+
+\renderchoices{\underline{\begin{LTR}{\textenglish{There is no inverse for this matrix}}\end{LTR}}}{\begin{LTR}\(\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9  \end{pmatrix}\)\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[4 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{5} \begin{LTR}{\textenglish{Solve for }}\(x \){\textenglish{ in the equation }}\(2x+6 = 0 \)\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{-1}}\end{LTR}}{\begin{LTR}{\textenglish{-2}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{-3}}\end{LTR}}}{\begin{LTR}{\textenglish{3}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{6} \begin{LTR}\(x=3+6 \){\textenglish{ what is the value of x?}}\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{7}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{9}}\end{LTR}}}{\begin{LTR}{\textenglish{8}}\end{LTR}}{\begin{LTR}{\textenglish{10}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{7} {\textarabic{إذا كان لديك قائمة طويلة من أسماء الفواكه، لكنك تبحث عن "تفاحة". أي خوارزمية بحث ستستخدمها إذا كنت كسولاً وتتوقع أن "تفاحة" ستكون في مكان ما في منتصف القائمة؟}}
+
+\renderchoices{{\textarabic{ البحث في الاتساع أولاً (Breadth-First Search)}}}{{\textarabic{ البحث الثنائي (Binary Search)}}}{\underline{\begin{LTR}{\textenglish{0}}\end{LTR}}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[5 Points]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{8} {\textarabic{إذا كانت لدينا خوارزمية تستغرق نفس الوقت لحل مشكلة بغض النظر عن حجمها، فما هو اسمها؟}}
+
+\renderchoices{\begin{LTR}{\textenglish{O(n)}}\end{LTR}}{\begin{LTR}{\textenglish{O(}}\(n^{2}\){\textenglish{)}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{0}}\end{LTR}}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{9} {\textarabic{أنت في مطعم وطلبت طبقاً. بعد أن تأكل الطبق، يأتي النادل ويضع طبقًا آخر فوقه. ما هي بنية البيانات التي تشبه هذا الموقف؟}}
+
+\renderchoices{{\textarabic{مصفوفة (Array)}}}{\underline{{\textarabic{ مكدس (Stack)}}}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}{\begin{LTR}{\textenglish{0}}\end{LTR}}
+{\begin{LTR}\hfill\textenglish{[1 Point]}\end{LTR}}\par\vspace{0.5em}
+
+\noindent \qheader{10} \begin{LTR}{\textenglish{Solve for x..: }}\[2^x + 16 = 0 \]\end{LTR}
+
+\renderchoices{\begin{LTR}{\textenglish{4}}\end{LTR}}{\begin{LTR}{\textenglish{-4}}\end{LTR}}{\begin{LTR}{\textenglish{2}}\end{LTR}}{\begin{LTR}{\textenglish{-2}}\end{LTR}}{\underline{\begin{LTR}{\textenglish{0}}\end{LTR}}}
+{\begin{LTR}\hfill\textenglish{[5 Points]}\end{LTR}}\par\vspace{0.5em}
+
+
+\end{multicols}
+
+\end{document}

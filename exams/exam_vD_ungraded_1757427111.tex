@@ -1,0 +1,159 @@
+% !TEX program = xelatex
+\documentclass[12pt]{article}
+
+% الهوامش
+\usepackage{geometry}
+\geometry{margin=0.8in}
+
+% تنسيقات عامة
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage[inline]{enumitem}    % enumerate* لسطر واحد
+\usepackage{tabularx}
+
+% دعم لغات/اتجاهات
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{bidi}                % LTR/RTL
+
+% رياضيات
+\usepackage{amsmath, amssymb, mathtools}
+
+% صور
+\usepackage{graphicx}
+
+% ضبط اللغات والخطوط
+\setmainlanguage[numerals=western]{arabic}   % افتراضي: عربي (أرقام 0-9 إنكليزية)
+\setotherlanguage{english}
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.05]{Amiri}
+\newfontfamily\englishfont{Times New Roman}
+
+% ترويسة/تذييل
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\EN{Page } \thepage}
+
+% ===== أدوات اتجاه آمنة =====
+% نص إنجليزي باتجاه LTR بشكل آمن وسهل
+\newcommand{\EN}[1]{{\begin{LTR}\textenglish{#1}\end{LTR}}}
+% نص عربي صريح (إن احتجت لفرضه داخل سياق LTR)
+\newcommand{\AR}[1]{{\textarabic{#1}}}
+
+% ===== ماكرو عنوان السؤال (يسار، LTR دائماً) =====
+\newcommand{\qtitle}[1]{%
+  \par\noindent{\begin{LTR}\textenglish{\textbf{Question #1}}\end{LTR}}\par\vspace{0.4em}%
+}
+% توافقاً مع مخرجاتك السابقة
+\newcommand{\qheader}[1]{\qtitle{#1}}
+
+% ===== عنصر خيار مع دعم مزج اللغات =====
+\newcommand{\AutoItem}[1]{#1}
+
+% ===== صفّ الخيارات أفقيًا مع لف تلقائي =====
+\newcommand{\renderchoices}[5]{%
+  {\begin{LTR}\begin{enumerate*}[
+    label=\textbf{\Alph*.},      % A. B. C. ...
+    itemjoin=\hspace{2em},
+    itemsep=0.25em,
+    leftmargin=0pt
+  ]
+    \ifx\relax#1\relax\else\item \AutoItem{#1}\fi
+    \ifx\relax#2\relax\else\item \AutoItem{#2}\fi
+    \ifx\relax#3\relax\else\item \AutoItem{#3}\fi
+    \ifx\relax#4\relax\else\item \AutoItem{#4}\fi
+    \ifx\relax#5\relax\else\item \AutoItem{#5}\fi
+  \end{enumerate*}\end{LTR}}\par
+}
+
+% مسافة أسطر مريحة
+\setstretch{1.25}
+
+\begin{document}
+
+% ===== Header (مطابق تقريبًا) =====
+\noindent
+\begin{tabularx}{\textwidth}{@{\extracolsep{\fill}} l c r}
+\EN{\textbf{Date:} September 4, 2025} &
+{\Large \textbf{\EN{Algorithms -1-}}} &
+\EN{University Of Aleppo} \\
+\EN{\textbf{Student Name:}} &
+\EN{\textbf{Model:} A} &
+\EN{\textbf{Duration:} 90 Minutes} \\
+\EN{\textbf{Student Number:}} & &
+\end{tabularx}
+
+\vspace{1.0cm}
+
+% عنوان قسم الأسئلة LTR
+{\EN{\textbf{Select the correct answer for each question:}}}
+
+% ===== أمثلة أسئلة (نفس طابع أمثلتك) =====
+
+\noindent\qheader{1}
+{\EN{Calculate the derivative of }} \( f(x) = x^2 \) {\EN{ then find the limit to infinity of the function }} \( \lim_{x \to \infty} f(x) \).
+\renderchoices{\EN{14}}{\EN{15}}{\underline{\EN{16}}}{\EN{17}}{\EN{17}}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{2}
+{\EN{Please calculate }} \( \int f(x)\,dx \).
+\renderchoices{\EN{13}}{\underline{\EN{14}}}{\EN{15}}{\EN{16}}{}
+{\begin{LTR}\hfill\EN{[2 Points]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{3}
+\EN{Test}
+\renderchoices{\EN{13}}{\underline{\EN{14}}}{\EN{15}}{\EN{16}}{\EN{17}}
+{\begin{LTR}\hfill\EN{[3 Points]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{4}
+\EN{Test2}
+\renderchoices{\underline{\EN{1}}}{\EN{2}}{\EN{3}}{\EN{4}}{\EN{5}}
+{\begin{LTR}\hfill\EN{[3 Points]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{5}
+\EN{Test3}
+\renderchoices{\EN{1}}{\EN{2}}{\underline{\EN{3}}}{\EN{4}}{\EN{5}}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{6}
+\EN{test4}
+\renderchoices{\underline{\EN{1}}}{\EN{2}}{\EN{3}}{\EN{4}}{\EN{5}}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{7}
+\EN{Hello!}
+\renderchoices{\underline{\EN{1}}}{\EN{2}}{\EN{3}}{\EN{4}}{}
+{\begin{LTR}\hfill\EN{[2 Points]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{8}
+\EN{Calculate } \(\sum\) \EN{ i}
+\renderchoices{\underline{\(n\,(n+1)/3\)}}{\(n\,(n-1)/2\)}{\EN{0}}{\EN{0}}{}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{9}
+\EN{Find the area of a rectangle of side } \(a = 6\)
+\renderchoices{\EN{34}}{\underline{\EN{36}}}{\EN{40}}{\EN{31}}{}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{10}
+\EN{For any positive integer } \(x\) \EN{ what is the value of } \(\iiint x^5\)\EN{?}
+\renderchoices{\underline{\EN{30}}}{\EN{40}}{\EN{50}}{\EN{60}}{}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{11}
+\EN{Solve for } \(x\) \EN{ in the equation } \(2x + 6 = 0\)
+\renderchoices{\EN{-1}}{\EN{-2}}{\underline{\EN{-3}}}{\EN{3}}{}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{12}
+\(x=3+6\) \EN{ what is the value of x?}
+\renderchoices{\EN{7}}{\underline{\EN{9}}}{\EN{8}}{\EN{10}}{\EN{0}}
+{\begin{LTR}\hfill\EN{[1 Point]}\end{LTR}}\vspace{0.5em}
+
+\noindent\qheader{13}
+\EN{What is the derivative of } \(x^2\)?
+\renderchoices{\(x\)}{\underline{\(2x\)}}{\EN{0}}{\EN{0}}{}
+{\begin{LTR}\hfill\EN{[5 Points]}\end{LTR}}\vspace{0.5em}
+
+\end{document}

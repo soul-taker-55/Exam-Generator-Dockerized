@@ -254,7 +254,6 @@ function openBulkModal(action, questionIds) {
             <div class="form-group">
                 <label for="export-format">Format:</label>
                 <select id="export-format" class="form-control">
-                    <option value="pdf">PDF</option>
                     <option value="word">Word Document</option>
                     <option value="text">Plain Text</option>
                 </select>

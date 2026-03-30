@@ -1,8 +1,8 @@
 <?php
-define('DB_HOST', '127.0.0.1');
-define('DB_USER', 'root'); 
-define('DB_PASS', '');
-define('DB_NAME', 'exam_generator_db');
+define('DB_HOST', 'db');
+define('DB_USER', 'exam_user'); 
+define('DB_PASS', 'exam_pass123');
+define('DB_NAME', 'exam_generator');
 
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

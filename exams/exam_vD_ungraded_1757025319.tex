@@ -1,0 +1,123 @@
+\documentclass[12pt]{article}
+
+% هوامش
+\usepackage{geometry}
+\geometry{margin=0.8in}
+
+% ألوان/رؤوس/تذييل/تباعد
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+% دعم يونيكود ولغات (يستلزم XeLaTeX)
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+% Math packages for bmatrix/pmatrix/align etc.
+\usepackage{amsmath, amssymb, mathtools}
+
+% لصفّ الخيارات أفقياً مع لفّ تلقائي
+\usepackage{tabularx, ragged2e, array}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+% ماكرو جدول الاختيارات (A,B / C,D / E)
+\newcommand{\renderchoices}[5]{%
+  \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{1.2em}Y >{\bfseries}p{1.2em}Y@{}}
+    A.& #1 & B.& #2\\[0.25em]
+    C.& #3 & D.& #4\\[0.25em]
+    \multicolumn{1}{@{}>{\bfseries}p{1.2em}}{E.}& #5 & \multicolumn{2}{l}{}
+  \end{tabularx}\par
+}
+
+\setmainlanguage[numerals=western]{arabic} % أرقام 0-9
+\setotherlanguage{english}
+
+% الخطوط
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.05]{Amiri}
+\newfontfamily\englishfont{Times New Roman}
+
+% ترويسة/تذييل
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\textenglish{Page } \thepage}
+
+% ماكرو الخيار (اختياري)
+\newcommand{\choice}[2]{\textbf{#1}.~#2}
+
+% فقرات
+\setlength{\parskip}{0.4em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+% ======= Header (fixed layout) =======
+\noindent
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l c r}
+\textenglish{Date: {\textenglish{September 4, 2025}}} &
+{\Large \textbf{{\textenglish{Algorithms -1-}}}} &
+{\textenglish{University of Aleppo}} \\
+\textenglish{Student Name:} &
+\textenglish{Model: {\textenglish{D}}} &
+\textenglish{\textbf{Duration:} {\textenglish{90 minuts}}} \\
+\textenglish{Student Number:} & & \\
+\end{tabular*}
+
+\vspace{0.9cm}
+
+\section*{اختر الإجابة الصحيحة لكل سؤال}
+\setstretch{1.25}
+
+\noindent \textbf{\textenglish{1.}} {\textenglish{Test2}}
+
+\renderchoices{{\textenglish{1}}}{{\textenglish{2}}}{{\textenglish{3}}}{{\textenglish{4}}}{{\textenglish{5}}}
+\hfill {\textenglish{[3 Points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{2.}} {\textenglish{Solve for }}\(x \){\textenglish{ in the equation }}\(2x+6 = 0 \)
+
+\renderchoices{{\textenglish{-1}}}{{\textenglish{-2}}}{{\textenglish{-3}}}{{\textenglish{3}}}{}
+\hfill {\textenglish{[1 Point]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{3.}} {\textarabic{احسب مشتق التابع }}\( f(x) = x^2\){\textarabic{ وأوجد نهايته عند اللانهاية }}\(\lim_{x \to \infty}f(x)\)
+
+\renderchoices{{\textenglish{14}}}{{\textenglish{15}}}{{\textenglish{16}}}{{\textenglish{17}}}{{\textenglish{17}}}
+\hfill {\textenglish{[1 Point]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{4.}} {\textenglish{Hello!}}
+
+\renderchoices{{\textenglish{1}}}{{\textenglish{2}}}{{\textenglish{3}}}{{\textenglish{4}}}{}
+\hfill {\textenglish{[2 Points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{5.}} {\textenglish{Please calculate }}\(\int f(x)dx\)
+
+\renderchoices{{\textenglish{13}}}{{\textenglish{14}}}{{\textenglish{15}}}{{\textenglish{16}}}{}
+\hfill {\textenglish{[2 Points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{6.}} \(x=3+6 \){\textenglish{ what is the value of x?}}
+
+\renderchoices{{\textenglish{7}}}{{\textenglish{9}}}{{\textenglish{8}}}{{\textenglish{10}}}{{\textenglish{0}}}
+\hfill {\textenglish{[1 Point]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{7.}} {\textenglish{Find the inverse of the following matrix: }}\(\begin{bmatrix} 1 & 3 & 4 \\ 5 & 2 & 1 \\ 6 & 8 & 1 \end{bmatrix}\)
+
+\renderchoices{{\textenglish{There is no inverse for this matrix}}}{\(\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9  \end{pmatrix}\)}{{\textenglish{0}}}{{\textenglish{0}}}{}
+\hfill {\textenglish{[4 Points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{8.}} {\textenglish{Test3}}
+
+\renderchoices{{\textenglish{1}}}{{\textenglish{2}}}{{\textenglish{3}}}{{\textenglish{4}}}{{\textenglish{5}}}
+\hfill {\textenglish{[1 Point]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{9.}} {\textenglish{Test}}
+
+\renderchoices{{\textenglish{13}}}{{\textenglish{14}}}{{\textenglish{15}}}{{\textenglish{16}}}{{\textenglish{17}}}
+\hfill {\textenglish{[3 Points]}}\\[0.5em]
+
+\noindent \textbf{\textenglish{10.}} {\textenglish{test4}}
+
+\renderchoices{{\textenglish{1}}}{{\textenglish{2}}}{{\textenglish{3}}}{{\textenglish{4}}}{{\textenglish{5}}}
+\hfill {\textenglish{[1 Point]}}\\[0.5em]
+
+
+
+\end{document}

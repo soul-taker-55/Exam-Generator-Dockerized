@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2025 at 08:09 PM
+-- Generation Time: Sep 05, 2025 at 10:53 PM
 -- Server version: 5.7.17
 -- PHP Version: 7.1.3
 
@@ -38,13 +38,6 @@ CREATE TABLE `exam` (
   `pdf_file_path` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `exam`
---
-
-INSERT INTO `exam` (`exam_ID`, `professor_ID`, `university_ID`, `subject_ID`, `creation_date`, `exam_date`, `pdf_file_path`) VALUES
-(1, 2, 1, 3, '2025-04-17', '2025-04-24', 'c://');
-
 -- --------------------------------------------------------
 
 --
@@ -77,24 +70,28 @@ CREATE TABLE `professor` (
   `phone_number` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `verification_token` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `is_verified` tinyint(1) NOT NULL DEFAULT '0',
-  `tokens` int(11) DEFAULT '10'
+  `tokens` int(11) DEFAULT '10',
+  `two_factor_enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `two_factor_code_hash` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `two_factor_expires_at` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `professor`
 --
 
-INSERT INTO `professor` (`prof_ID`, `username`, `password`, `first_name`, `last_name`, `email`, `registration_date`, `phone_number`, `verification_token`, `is_verified`, `tokens`) VALUES
-(1, 'lkjhgf', '$2y$10$MmvuDrHNc.wzrQGWdQo8h.hBPOfdGi7cxC1PXmYqawbjLOoDC4ZJS', 'kjhgf', '', 'mauriciosayegh7@gmail.com', '2025-04-16', 'lkjhgf', NULL, 0, 10),
-(2, 'Mauricio_7', '$2y$10$OtfpP45LRyv7DGyLidoXOeKGbDdCzO7FMcK1OKgkCf3z3yP.VuVAe', 'Mauricio', 'Sayegh', 'mauriciosayegh7@gmail.com', '2025-04-16', '0937568644', NULL, 0, 20),
-(3, 'Mauricio_8', '$2y$10$u3KP2tbtHbw53yHHygT.iuq/oPMgMlbkd7Vx2gq1HL62TY/5tHdXO', 'Mauricio', 'Sayegh', 'mauriciosayegh@gmail.com', '2025-04-16', '0937568644', NULL, 0, 10),
-(4, 'bvcftyuiklm', '$2y$10$WWs5MbFgt2BrIPY6t8y6ZeD.h0cFnoFW0wRPcJIDnQ3WIhrYKVFRG', 'mnbvfrtyujm', '', 'mnbvfgy@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
-(5, 'nbgyuj', '$2y$10$42F9G6x9R2ROup7LS9yHu./e20f25g.hbOq2d2dozJCUgL23HZLgS', 'lkjbgyj', '', 'mnbvftyuj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
-(6, 'kjhguik', '$2y$10$kbvJYWcMw6Q5X2eW85NLnOSlg4ab7USJ8OWTYxNCLlavjRY7OWduS', ',kjhg', '', 'kjbgfgyj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
-(7, 'mnbvgj', '$2y$10$d35YsOLa0ZtlTVz4g.UdHeXzdFVBJ6/XgjfRypliv8EMKPTjvSb3G', 'kjhgftyu', '', 'kjbgfgyj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
-(8, 'mnbvcxzasdfghjk', '$2y$10$wbiuJR2BVDJ3K2FkBMv1sOxT1Oc/ehd2Q5VOvpRDCJWueTGCbxsXG', 'mnbvcxsdrftghj', '', 'kjbgfgyffj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
-(9, 'lkjhgfdxcvbn', '$2y$10$8tlRPHBUielo3BzBEhmM4usD.umPHqcSQalab35muMa9uUUpMHU1i', 'mnbvcxzasdfghjkl', '', 'dfkjbgfgyj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10),
-(11, 'testemailverification', '$2y$10$IDmHYaqz7Ey28UMvEHKVse1ExQIMAGPr1WKcI.el3yuut09iwQAhG', 'testemailverification', '', 'abdallah.sayegh@gmail.com', '2025-04-17', '0987654321', 'df710f952208be346493d638420d544520fe29ff0210e2db043be25e82105416', 0, 10);
+INSERT INTO `professor` (`prof_ID`, `username`, `password`, `first_name`, `last_name`, `email`, `registration_date`, `phone_number`, `verification_token`, `is_verified`, `tokens`, `two_factor_enabled`, `two_factor_code_hash`, `two_factor_expires_at`) VALUES
+(1, 'lkjhgf', '$2y$10$MmvuDrHNc.wzrQGWdQo8h.hBPOfdGi7cxC1PXmYqawbjLOoDC4ZJS', 'kjhgf', '', 'mauriciosayegh77@gmail.com', '2025-04-16', 'lkjhgf', NULL, 0, 10, 0, NULL, NULL),
+(2, 'Mauricio_7', '$2y$10$OtfpP45LRyv7DGyLidoXOeKGbDdCzO7FMcK1OKgkCf3z3yP.VuVAe', 'Mauricio', 'Sayegh', 'mauriciosayegh7@gmail.com', '2025-04-16', '0937568644', NULL, 1, 20, 0, NULL, NULL),
+(3, 'Mauricio_8', '$2y$10$u3KP2tbtHbw53yHHygT.iuq/oPMgMlbkd7Vx2gq1HL62TY/5tHdXO', 'Mauricio', 'Sayegh', 'mauriciosayegh@gmail.com', '2025-04-16', '0937568644', NULL, 0, 10, 0, NULL, NULL),
+(4, 'bvcftyuiklm', '$2y$10$WWs5MbFgt2BrIPY6t8y6ZeD.h0cFnoFW0wRPcJIDnQ3WIhrYKVFRG', 'mnbvfrtyujm', '', 'mnbvfgy@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10, 0, NULL, NULL),
+(5, 'nbgyuj', '$2y$10$42F9G6x9R2ROup7LS9yHu./e20f25g.hbOq2d2dozJCUgL23HZLgS', 'lkjbgyj', '', 'mnbvftyuj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10, 0, NULL, NULL),
+(6, 'kjhguik', '$2y$10$kbvJYWcMw6Q5X2eW85NLnOSlg4ab7USJ8OWTYxNCLlavjRY7OWduS', ',kjhg', '', 'kjbgfgyj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10, 0, NULL, NULL),
+(7, 'mnbvgj', '$2y$10$d35YsOLa0ZtlTVz4g.UdHeXzdFVBJ6/XgjfRypliv8EMKPTjvSb3G', 'kjhgftyu', '', 'kjbgfgyj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10, 0, NULL, NULL),
+(8, 'mnbvcxzasdfghjk', '$2y$10$wbiuJR2BVDJ3K2FkBMv1sOxT1Oc/ehd2Q5VOvpRDCJWueTGCbxsXG', 'mnbvcxsdrftghj', '', 'kjbgfgyffj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10, 0, NULL, NULL),
+(9, 'lkjhgfdxcvbn', '$2y$10$8tlRPHBUielo3BzBEhmM4usD.umPHqcSQalab35muMa9uUUpMHU1i', 'mnbvcxzasdfghjkl', '', 'dfkjbgfgyj@gmail.com', '2025-04-16', '0987654321', NULL, 0, 10, 0, NULL, NULL),
+(11, 'testemailverification', '$2y$10$IDmHYaqz7Ey28UMvEHKVse1ExQIMAGPr1WKcI.el3yuut09iwQAhG', 'testemailverification', '', 'abdallah.sayegh@gmail.com', '2025-04-17', '0987654321', 'df710f952208be346493d638420d544520fe29ff0210e2db043be25e82105416', 0, 10, 0, NULL, NULL),
+(18, 'Naya_777', '$2y$10$Kt071C1OA.N5nWh5/2bHgelOMFyjmZzQ6SBLkPH/Wj2DOgkXZqq9e', 'Naya', 'Marjamakk', 'eliaszikra23@gmail.com', '2025-09-05', '0932940127', 'a4b7cf280ee9676449e65b9e3e1477fd00d5b9fa28c20314c897fc31026812cd', 0, 10, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -118,7 +115,16 @@ INSERT INTO `professor_university` (`prof_uni_ID`, `professor_ID`, `university_I
 (3, 11, 6),
 (4, 2, 1),
 (5, 3, 2),
-(6, 3, 3);
+(6, 3, 3),
+(11, 12, 8),
+(12, 13, 8),
+(13, 14, 2),
+(14, 15, 2),
+(15, 16, 2),
+(16, 17, 2),
+(17, 18, 2),
+(18, 19, 6),
+(19, 20, 6);
 
 -- --------------------------------------------------------
 
@@ -154,16 +160,19 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`question_ID`, `professor_ID`, `subject_ID`, `question_text`, `img_path`, `difficulty`, `ans_A`, `is_correct_A`, `ans_B`, `is_correct_B`, `ans_C`, `is_correct_C`, `ans_D`, `is_correct_D`, `ans_E`, `is_correct_E`, `group_num`, `is_sub`, `date`, `mark`) VALUES
-(1, 2, 3, 'احسب مشتق التابع \\( f(x) = x^2\\) وأوجد نهايته عند اللانهاية \\(\\lim_{x \\to \\infty}f(x)\\)', NULL, 2, '14', 0, '15', 0, '16', 1, '17', 0, '17', 0, 1, 0, '2025-04-24', 1),
+(1, 2, 3, 'Calculate the derivative of \\( f(x) = x^2\\) then find the limit to infinity of the function \\(\\lim_{x \\to \\infty}f(x)\\)', NULL, 2, '14', 0, '15', 0, '16', 1, '17', 0, '17', 0, 1, 0, '2025-04-24', 1),
 (2, 2, 3, 'Please calculate \\(\\int f(x)dx\\)', NULL, 1, '13', 0, '14', 1, '15', 0, '16', 0, '', 0, 2, 0, '2025-04-26', 2),
 (3, 2, 3, 'Test', NULL, 3, '13', 0, '14', 1, '15', 0, '16', 0, '17', 0, 3, 0, '2025-05-15', 3),
 (4, 2, 3, 'Test2', NULL, 3, '1', 1, '2', 0, '3', 0, '4', 0, '5', 0, 3, 0, '2025-05-15', 3),
 (5, 2, 3, 'Test3', NULL, 3, '1', 0, '2', 0, '3', 1, '4', 0, '5', 0, 4, 1, '2025-05-15', 1),
 (6, 2, 3, 'test4', NULL, 3, '1', 1, '2', 0, '3', 0, '4', 0, '5', 0, 5, 0, '2025-05-15', 1),
 (7, 2, 3, 'Hello!', NULL, 1, '1', 1, '2', 0, '3', 0, '4', 0, '', 0, 6, 1, '2025-05-22', 2),
-(8, 2, 3, 'Find the inverse of the following matrix: \\(\\begin{bmatrix} 1 & 3 & 4 \\\\ 5 & 2 & 1 \\\\ 6 & 8 & 1 \\end{bmatrix}\\)', NULL, 3, 'There is no inverse for this matrix', 1, '\\[\\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9  \\end{pmatrix}\\]', 0, '0', 0, '0', 0, '', 0, 7, 1, '2025-05-23', 4),
+(11, 2, 3, 'Calculate \\(\\sum\\) i', NULL, 1, '\\(n*(n+1)/3\\)', 1, '\\(n*(n-1)/2\\)', 0, '0', 0, '0', 0, '', 0, 10, 0, '2025-08-03', 1),
+(12, 2, 3, 'Find the area of a rectangle of side \\(a = 6 \\)', NULL, 1, '34', 0, '36', 1, '40', 0, '31', 0, '', 0, 11, 0, '2025-08-04', 1),
+(13, 2, 3, 'For any positive integer \\(x\\) what is the value of \\(\\iiint x^5\\)?', NULL, 1, '30', 1, '40', 0, '50', 0, '60', 0, '', 0, 12, 0, '2025-08-04', 1),
 (9, 2, 3, 'Solve for \\(x \\) in the equation \\(2x+6 = 0 \\)', NULL, 1, '-1', 0, '-2', 0, '-3', 1, '3', 0, '', 0, 8, 1, '2025-05-23', 1),
-(10, 2, 3, '\\(x=3+6 \\) what is the value of x?', NULL, 1, '7', 0, '9', 1, '8', 0, '10', 0, '0', 0, 9, 0, '2025-05-23', 1);
+(10, 2, 3, '\\(x=3+6 \\) what is the value of x?', NULL, 1, '7', 0, '9', 1, '8', 0, '10', 0, '0', 0, 9, 0, '2025-05-23', 1),
+(14, 2, 3, 'What is the derivative of \\( x^2\\)', NULL, 2, '\\( x\\)', 0, '\\(2*x\\)', 1, '0', 0, '0', 0, '', 0, 13, 0, '2025-08-04', 5);
 
 -- --------------------------------------------------------
 
@@ -185,11 +194,11 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`subject_ID`, `university_ID`, `professor_ID`, `subject_name`, `total_mark`, `duration`) VALUES
-(6, 1, 2, 'Programming -2-', 70, 'ساعة ونصف'),
-(3, 1, 2, 'Algorithms -1-', 70, '90 minuts'),
-(7, 1, 2, 'Algorithms -2-', 70, 'ساعة'),
-(8, 1, 2, 'Programming in Logic', 70, 'ساعتين ونص'),
-(9, 1, 2, 'Cyber Security ', 70, 'ساعة');
+(6, 1, 2, 'Programming -2-', 70, '90 Minute'),
+(3, 1, 2, 'Algorithms -1-', 70, '90 Minutes'),
+(7, 1, 2, 'Algorithms -2-', 70, '60 Minute'),
+(8, 1, 2, 'Programming in Logic', 70, '150 Minute'),
+(9, 1, 2, 'Cyber Security ', 70, '60 Minute');
 
 -- --------------------------------------------------------
 
@@ -316,7 +325,7 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `exam_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `exam_ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `exam_question`
 --
@@ -326,22 +335,22 @@ ALTER TABLE `exam_question`
 -- AUTO_INCREMENT for table `professor`
 --
 ALTER TABLE `professor`
-  MODIFY `prof_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `prof_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `professor_university`
 --
 ALTER TABLE `professor_university`
-  MODIFY `prof_uni_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `prof_uni_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `question_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `question_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `subject_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `token_transactions`
 --

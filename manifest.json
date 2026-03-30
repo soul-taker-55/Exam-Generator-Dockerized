@@ -1,0 +1,43 @@
+{  
+  "name": "Exam-Generator",
+  "short_name": "ExGen",
+  "start_url": "/Exam_Generator/",
+  "display": "standalone",
+  "description": "A description for your application",
+  "theme_color": "#ffffff",
+  "background_color": "#4285f4",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "exam-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "exam-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "exam-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "exam-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "windows",
+      "url": "http://localhost/Exam-Generator/"
+    }
+  ],
+  "prefer_related_applications": false
+}

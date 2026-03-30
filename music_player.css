@@ -1,0 +1,37 @@
+/* Modal */
+#music-modal.hidden{display:none}
+#music-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center}
+#music-modal .music-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}
+#music-modal .music-container{position:relative;width:min(960px,95vw);max-height:90vh;overflow:hidden;background:#111;color:#eee;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column}
+#music-modal .music-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#16a34a;color:#fff}
+#music-modal .music-header h2{margin:0;font-size:18px;display:flex;gap:8px;align-items:center}
+#music-modal .music-close{background:transparent;border:0;color:#fff;font-size:18px;cursor:pointer}
+#music-modal .music-nowplaying{padding:12px 16px;background:#0b1410}
+#music-modal .track-meta{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#music-modal .track-title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#music-modal .progress-wrap{margin-top:10px;height:8px;background:rgba(255,255,255,.12);border-radius:9999px;cursor:pointer}
+#music-modal .progress-bar{height:100%;width:0%;background:#22c55e;border-radius:9999px}
+#music-modal .music-controls{display:flex;gap:10px;align-items:center;padding:10px 16px;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);background:#0b1410}
+#music-modal .music-controls button{background:#1f2937;border:0;color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer}
+#music-modal .music-controls button.active{outline:2px solid #22c55e}
+#music-modal .music-controls .autoplay{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:14px}
+#music-modal .music-controls .volume{display:flex;align-items:center;gap:8px;margin-left:12px}
+#music-modal .music-body{overflow:auto}
+#music-modal .playlist{list-style:none;margin:0;padding:0}
+#music-modal .playlist li{display:flex;justify-content:space-between;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
+#music-modal .playlist li:hover{background:rgba(255,255,255,.04)}
+#music-modal .playlist li.active{background:rgba(34,197,94,.14)}
+#music-modal .playlist .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#music-modal .playlist .badge{opacity:.7;font-size:12px}
+@media (max-width:560px){#music-modal .track-meta{flex-direction:column;align-items:flex-start}#music-modal .music-controls{flex-wrap:wrap}}
+
+/* Mini player (ثابت عبر الصفحات) */
+.mini-player{position:fixed;right:16px;bottom:16px;z-index:999;background:#111827;color:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.35);display:none;min-width:260px;max-width:420px;overflow:hidden;font-size:14px}
+.mini-player .mp-body{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.mini-player .mp-title{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-player .mp-btn{background:#1f2937;border:0;color:#fff;border-radius:8px;padding:6px 8px;cursor:pointer}
+.mini-player .mp-btn:hover{background:#374151}
+.mini-player .mp-progress{height:4px;background:rgba(255,255,255,.15)}
+.mini-player .mp-bar{height:100%;width:0%;background:#22c55e}
+.mini-player .mp-open{background:transparent;color:#9ca3af;border:0;cursor:pointer;padding:6px 8px}
+.mini-player .mp-open:hover{color:#fff}

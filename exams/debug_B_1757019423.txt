@@ -1,0 +1,9 @@
+Command: "C:\Users\medoo\AppData\Local\Programs\MiKTeX\miktex\bin\x64\xelatex.exe" -interaction=nonstopmode -halt-on-error -no-shell-escape -output-directory="C:\xampp\htdocs\exmgen/exams/" "C:\xampp\htdocs\exmgen/exams/exam_vB_graded_1757019419.tex"
+
+Return1: 1
+StdErr1:
+
+
+Return2: 1
+StdErr2:
+

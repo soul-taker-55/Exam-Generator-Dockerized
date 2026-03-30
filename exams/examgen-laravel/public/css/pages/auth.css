@@ -1,0 +1,19 @@
+/* Auth pages (login/register) */
+.auth-bg{
+  min-height:100vh;
+  background: url('/images/edu-bg.jpg') center/cover no-repeat fixed,
+              radial-gradient(1000px 600px at 70% 10%, #0b2545 0%, #0a1e36 40%, #081a2d 80%);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.auth-box{
+  width:min(420px, 92vw);
+  background:rgba(35,45,60,.55);
+  color:#fff; border-radius:16px; padding:24px 20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25); backdrop-filter:blur(8px);
+}
+.auth-box h1{margin:0 0 12px}
+.auth-box .input{background:rgba(255,255,255,.95)}
+.auth-actions{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.auth-btn{width:100%;margin-top:16px}
+.auth-footer{margin-top:10px;font-size:.9rem}
+.auth-footer a{color:#cbe0ff}

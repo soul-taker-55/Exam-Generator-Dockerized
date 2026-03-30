@@ -153,10 +153,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
                 // Server settings (configure these with your SMTP provider)
                 $mail->isSMTP();
-                $mail->Host       = 'smtp.example.com'; // Your SMTP server
+                $mail->Host       = 'smtp.gmail.com'; // Your SMTP server
                 $mail->SMTPAuth   = true;
-                $mail->Username   = 'your_email@example.com'; // SMTP username
-                $mail->Password   = 'your_email_password'; // SMTP password
+                $mail->Username   = 'mauriciosayegh7@gmail.com'; // SMTP username
+                $mail->Password   = 'fdwv cybm mgwe bafg'; // SMTP password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
 
@@ -165,24 +165,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->addAddress($form_data['email'], $first_name . ' ' . $last_name);
 
                 // Content
-                $verification_url = "https://yourdomain.com/verify.php?token=$verification_token";
+                // Build a correct absolute URL based on current host and directory
+                $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+                $host = $_SERVER['HTTP_HOST'];
+                $basePath = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+                $verification_url = $scheme . '://' . $host . $basePath . '/verify.php?token=' . urlencode($verification_token);
                 
                 $mail->isHTML(true);
                 $mail->Subject = 'Verify Your Email Address';
                 $mail->Body    = "Dear Professor $first_name,<br><br>
                                  Thank you for registering with Exam Generator System.<br>
-                                 Please click the following link to verify your email address:<br>
-                                 <a href='$verification_url'>Verify My Email</a><br><br>
+                                 Please click the button below to verify your email address:<br><br>
+                                 <a href=\"$verification_url\" style=\"display:inline-block;padding:10px 16px;background:#4CAF50;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:bold;\" target=\"_blank\">Verify My Email</a><br><br>
+                                 If the button doesn't work, copy and paste this link into your browser:<br>
+                                 <a href=\"$verification_url\">$verification_url</a><br><br>
                                  If you didn't request this, please ignore this email.<br><br>
                                  Best regards,<br>
                                  Exam Generator Team";
-                $mail->AltBody = "Dear Professor $first_name,\n\n
-                                 Thank you for registering with Exam Generator System.\n
-                                 Please visit the following link to verify your email address:\n
-                                 $verification_url\n\n
-                                 If you didn't request this, please ignore this email.\n\n
-                                 Best regards,\n
-                                 Exam Generator Team";
+                $mail->AltBody = "Dear Professor $first_name,\n\n"
+                               . "Thank you for registering with Exam Generator System.\n"
+                               . "Please visit the following link to verify your email address:\n"
+                               . "$verification_url\n\n"
+                               . "If you didn't request this, please ignore this email.\n\n"
+                               . "Best regards,\n"
+                               . "Exam Generator Team";
 
                 $mail->send();
                 
@@ -195,7 +201,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
             } catch (Exception $emailException) {
                 $conn->rollback();
-                error_log("Email sending failed: " . $emailException->getMessage());
+                //error_log("Email sending failed: " . $emailException->getMessage());
+                //$errors[] = "Email Error: " . $emailException->getMessage(); // Show error during testing
                 $errors[] = "Registration completed but we couldn't send verification email. Please contact support.";
             }
 

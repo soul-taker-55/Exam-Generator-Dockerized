@@ -15,6 +15,14 @@ $questions = [];
 $selected_subject = isset($_GET['subject_id']) ? $_GET['subject_id'] : (isset($_POST['subject_id']) ? $_POST['subject_id'] : null);
 $exam_date = isset($_POST['exam_date']) ? $_POST['exam_date'] : '';
 
+// Date constraints: allow today up to one year ahead
+$todayImmutable = new DateTimeImmutable('today');
+$minDate = $todayImmutable->format('Y-m-d');
+$maxDate = $todayImmutable->modify('+1 year')->format('Y-m-d');
+if (empty($exam_date)) {
+    $exam_date = $minDate;
+}
+
 // Get professor's subjects
 $subjects = [];
 $stmt = $conn->prepare("SELECT subject_ID, subject_name FROM subject WHERE professor_ID = ?");
@@ -86,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="create_exam_style.css">
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    <link rel="stylesheet" href="music_player.css">
 </head>
 <body>
     <div class="sidebar">
@@ -142,6 +150,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
                     <i class="fas fa-user-cog"></i>
                     <span>Profile</span>
                 </a>
+
+                <a href="#" id="music-btn">
+                    <i class="fas fa-music"></i>
+                    <span>Music</span>
+                </a>
+                
                 <a href="logout.php" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
@@ -186,7 +200,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
                     <div class="form-group">
                         <label for="exam_date">Exam Date:</label>
                         <input style="width:280px;" type="date" id="exam_date" name="exam_date" 
-                               value="<?php echo htmlspecialchars($exam_date); ?>" required>
+                               value="<?php echo htmlspecialchars($exam_date); ?>"
+                               min="<?php echo htmlspecialchars($minDate); ?>"
+                               max="<?php echo htmlspecialchars($maxDate); ?>"
+                               aria-describedby="examDateHelp examDateValidation"
+                               required>
+                        <small id="examDateHelp" class="form-hint">
+                            Allowed: from <?php echo htmlspecialchars(date('M d, Y', strtotime($minDate))); ?>
+                            to <?php echo htmlspecialchars(date('M d, Y', strtotime($maxDate))); ?>
+                        </small>
+                        <div id="examDateValidation" class="validation-message" role="alert" aria-live="polite" style="color:#d93025; margin-top:4px; display:none;"></div>
                     </div>
                     
                     <h3>Exam Layout Options</h3>
@@ -239,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
                         <div class="no-questions-message">
                             <i class="fas fa-exclamation-circle"></i>
                             <p>No questions found for this subject.</p>
-                            <a href="add_question.php?subject_id=<?php echo $selected_subject; ?>" class="btn btn-primary">
+                            <a href="make_a_question.php?subject_id=<?php echo $selected_subject; ?>" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Add Questions
                             </a>
                         </div>
@@ -340,6 +363,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
             }
         }
         
+        // Client-side validation for exam date
+        (function() {
+            const form = document.getElementById('examForm');
+            const dateInput = document.getElementById('exam_date');
+            const msg = document.getElementById('examDateValidation');
+            if (!form || !dateInput || !msg) return;
+
+            const min = dateInput.getAttribute('min');
+            const max = dateInput.getAttribute('max');
+
+            function showMessage(text) {
+                msg.textContent = text || '';
+                msg.style.display = text ? 'block' : 'none';
+                dateInput.setAttribute('aria-invalid', text ? 'true' : 'false');
+            }
+
+            function clearNativeValidity() {
+                if (typeof dateInput.setCustomValidity === 'function') {
+                    dateInput.setCustomValidity('');
+                }
+            }
+
+            function setNativeValidity(text) {
+                if (typeof dateInput.setCustomValidity === 'function') {
+                    dateInput.setCustomValidity(text);
+                    dateInput.reportValidity();
+                }
+            }
+
+            function validateExamDate() {
+                clearNativeValidity();
+                const val = dateInput.value;
+
+                if (!val) {
+                    const msgText = 'Please select an exam date.';
+                    showMessage(msgText);
+                    setNativeValidity(msgText);
+                    return false;
+                }
+                if (val < min) {
+                    const msgText = 'The exam date cannot be in the past.';
+                    showMessage(msgText);
+                    setNativeValidity(msgText);
+                    return false;
+                }
+                if (val > max) {
+                    const msgText = 'The exam date cannot be more than one year from today.';
+                    showMessage(msgText);
+                    setNativeValidity(msgText);
+                    return false;
+                }
+                showMessage('');
+                return true;
+            }
+
+            dateInput.addEventListener('input', validateExamDate);
+            dateInput.addEventListener('change', validateExamDate);
+
+            form.addEventListener('submit', function(e) {
+                if (!validateExamDate()) {
+                    e.preventDefault();
+                    dateInput.focus();
+                }
+            });
+        })();
+
         // Filter questions based on search and difficulty
         function filterQuestions() {
             const searchText = document.getElementById('questionSearch').value.toLowerCase();
@@ -440,5 +529,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_exam']) && !
             showTemplatePreview(document.getElementById('template_type').value);
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+    <script defer src="music_player.js"></script>
 </body>
 </html>

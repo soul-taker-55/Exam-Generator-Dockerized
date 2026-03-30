@@ -1,0 +1,8 @@
+/* Exams (index/create/builder) */
+.exam-toolbar{display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px}
+.builder{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bank,.picked{border:1px solid var(--border);border-radius:12px;background:#fff;padding:12px}
+.bank h3,.picked h3{margin:0 0 10px}
+.bank-list,.picked-list{display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow:auto}
+.bank-item,.picked-item{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);background:#fff;border-radius:8px;padding:10px}
+.points{width:70px}

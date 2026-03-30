@@ -66,6 +66,10 @@ $stmt->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="view_exam.css">
+    <link rel="stylesheet" href="view_exams.css">
+    <link rel="stylesheet" href="music_player.css">
+
     <style>
         .exam-container {
             background-color: var(--white);
@@ -164,6 +168,12 @@ $stmt->close();
                     <i class="fas fa-user-cog"></i>
                     <span>Profile</span>
                 </a>
+
+                <a href="#" id="music-btn">
+                    <i class="fas fa-music"></i>
+                    <span>Music</span>
+                </a>
+
                 <a href="logout.php" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
@@ -203,5 +213,7 @@ $stmt->close();
             document.querySelector('.sidebar').classList.toggle('collapsed');
         });
     </script>
+
+    <script defer src="music_player.js"></script>
 </body>
 </html>

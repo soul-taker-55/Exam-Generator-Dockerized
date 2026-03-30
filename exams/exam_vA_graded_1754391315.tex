@@ -1,0 +1,192 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+% Math configuration
+\allowdisplaybreaks
+\setlength{\jot}{10pt}
+
+% Additional math operators and symbols
+\DeclareMathOperator{\arctg}{arctg}
+\DeclareMathOperator{\arcctg}{arcctg}
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccsc}{arccsc}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\gcd}{gcd}
+
+% Improve fraction display in inline math
+\renewcommand{\frac}[2]{\displaystyle\frac{#1}{#2}}
+
+% Better spacing for limits
+\let\oldlim\lim
+\renewcommand{\lim}{\displaystyle\oldlim}
+\let\oldsum\sum
+\renewcommand{\sum}{\displaystyle\oldsum}
+\let\oldint\int
+\renewcommand{\int}{\displaystyle\oldint}
+\geometry{margin=0.7in}
+
+% Setup fancy headers
+\pagestyle{fancy}
+\fancyhf{} % Clear all header/footer fields
+\renewcommand{\headrulewidth}{0pt} % Remove header rule
+\cfoot{Page \thepage} % Add page numbering in the center footer
+
+% Define command for inline choices + marks
+\newcommand{\choice}[3]{%
+    \textbf{#1}.~#2\hfill%
+    \ifx&#3&%
+    \else%
+        \rlap{[\textbf{#3 pts}]}%
+    \fi%
+    \vspace{0.3em} % Add spacing after each question
+}
+
+\begin{document}
+
+% Custom header with three parts
+\begin{minipage}[t]{0.3\textwidth}
+    \textbf{Date:} August 15, 2025\\[0.5em]
+    \textbf{Student Name: }\\[0.5em]
+    \textbf{Student Number: }
+\end{minipage}
+\begin{minipage}[t]{0.3\textwidth}
+    \centering
+    \Large\textbf{Algorithms -1-}\\[0.5em]
+    \Large{Model:} A\\[0.5em]
+\end{minipage}\hfill
+\begin{minipage}[t]{0.3\textwidth}
+    \raggedleft
+    University of Aleppo\\[0.5em]
+    \textbf{Duration: }90 Minutes
+
+\end{minipage}
+
+\vspace{1.5cm}
+
+\section*{\small Select the correct answer for each question:}\noindent \textbf{1.} 
+
+\noindent\choice{A}{14}{}
+\noindent\choice{B}{15}{}
+\noindent\choice{C}{\underline{16}}{}
+\noindent\choice{D}{17}{}
+\noindent\choice{E}{17}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{2.} 
+
+\noindent\choice{A}{13}{}
+\noindent\choice{B}{\underline{14}}{}
+\noindent\choice{C}{15}{}
+\noindent\choice{D}{16}{}
+\hfill \textbf{[2 points]}
+
+\vspace{0.5em}
+\noindent \textbf{3.} 
+
+\noindent\choice{A}{13}{}
+\noindent\choice{B}{\underline{14}}{}
+\noindent\choice{C}{15}{}
+\noindent\choice{D}{16}{}
+\noindent\choice{E}{17}{}
+\hfill \textbf{[3 points]}
+
+\vspace{0.5em}
+\noindent \textbf{4.} 
+
+\noindent\choice{A}{\underline{1}}{}
+\noindent\choice{B}{2}{}
+\noindent\choice{C}{3}{}
+\noindent\choice{D}{4}{}
+\noindent\choice{E}{5}{}
+\hfill \textbf{[3 points]}
+
+\vspace{0.5em}
+\noindent \textbf{5.} 
+
+\noindent\choice{A}{1}{}
+\noindent\choice{B}{2}{}
+\noindent\choice{C}{\underline{3}}{}
+\noindent\choice{D}{4}{}
+\noindent\choice{E}{5}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{6.} 
+
+\noindent\choice{A}{\underline{1}}{}
+\noindent\choice{B}{2}{}
+\noindent\choice{C}{3}{}
+\noindent\choice{D}{4}{}
+\noindent\choice{E}{5}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{7.} 
+
+\noindent\choice{A}{\underline{1}}{}
+\noindent\choice{B}{2}{}
+\noindent\choice{C}{3}{}
+\noindent\choice{D}{4}{}
+\hfill \textbf{[2 points]}
+
+\vspace{0.5em}
+\noindent \textbf{8.} 
+
+\noindent\choice{A}{\underline{\(n*(n+1)/3\)}}{}
+\noindent\choice{B}{\(n*(n-1)/2\)}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{9.} 
+
+\noindent\choice{A}{34}{}
+\noindent\choice{B}{\underline{36}}{}
+\noindent\choice{C}{40}{}
+\noindent\choice{D}{31}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{10.} 
+
+\noindent\choice{A}{\underline{30}}{}
+\noindent\choice{B}{40}{}
+\noindent\choice{C}{50}{}
+\noindent\choice{D}{60}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{11.} 
+
+\noindent\choice{A}{-1}{}
+\noindent\choice{B}{-2}{}
+\noindent\choice{C}{\underline{-3}}{}
+\noindent\choice{D}{3}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{12.} 
+
+\noindent\choice{A}{7}{}
+\noindent\choice{B}{\underline{9}}{}
+\noindent\choice{C}{8}{}
+\noindent\choice{D}{10}{}
+\hfill \textbf{[1 points]}
+
+\vspace{0.5em}
+\noindent \textbf{13.} 
+
+\noindent\choice{A}{\( x\)}{}
+\noindent\choice{B}{\underline{\(2*x\)}}{}
+\hfill \textbf{[5 points]}
+
+\vspace{0.5em}
+
+
+\end{document}

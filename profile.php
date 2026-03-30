@@ -17,28 +17,97 @@ unset($_SESSION['success']);
 // Handle profile update
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     $first_name = isset($_POST['first_name']) ? trim($_POST['first_name']) : '';
-    $last_name = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
-    
-    // Validate inputs
-    if (empty($first_name)) {
-        $error = 'First name is required';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $last_name  = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
+    $email      = isset($_POST['email']) ? trim($_POST['email']) : '';
+    $phone      = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+    $two_factor_enabled = isset($_POST['two_factor_enabled']) ? 1 : 0;
+
+    // NEW: password fields (optional)
+    $current_password = $_POST['current_password'] ?? '';
+    $new_password     = $_POST['new_password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
+
+    // Validate profile inputs (same as before)
+    if (empty($first_name) || empty($last_name)) {
+        $error = 'First name and Last name are required';
+    } 
+    elseif (!preg_match("/^[A-Z][a-z]+([-][A-Z][a-z]+)*$/", $first_name)) {
+        $error = 'The first name must contain only letters and hyphens(-). The first letter and any letter following a hyphen must be capitalized.';
+    }
+    elseif (!preg_match("/^[A-Z][a-z]+([-][A-Z][a-z]+)*$/", $last_name)) {
+        $error = 'The first name must contain only letters and hyphens(-). The first letter and any letter following a hyphen must be capitalized.';
+    }
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email address';
-    } else {
-        $stmt = $conn->prepare("UPDATE professor SET first_name = ?, last_name = ?, email = ?, phone_number = ? WHERE prof_ID = ?");
-        $stmt->bind_param("ssssi", $first_name, $last_name, $email, $phone, $professor_id);
-        
-        if ($stmt->execute()) {
+    }
+    elseif (!preg_match("/^09\d{8}$/", $phone)) {
+        $error = 'Phone number must be 10 digits and start with 09xx xxx xxx';
+    }
+    else {
+        // 1) Update profile info first
+        $stmt = $conn->prepare("UPDATE professor SET first_name = ?, last_name = ?, email = ?, phone_number = ?, two_factor_enabled = ? WHERE prof_ID = ?");
+        $stmt->bind_param("ssssii", $first_name, $last_name, $email, $phone, $two_factor_enabled, $professor_id);
+
+        $profile_ok = $stmt->execute();
+        $stmt->close();
+
+        if (!$profile_ok) {
+            $error = 'Error updating profile: ' . $conn->error;
+        } else {
             $_SESSION['name'] = $first_name . ' ' . $last_name;
             $success = 'Profile updated successfully!';
-        } else {
-            $error = 'Error updating profile: ' . $conn->error;
         }
-        $stmt->close();
+
+        // 2) If user provided any password field, process password change
+        $wants_password_change = ($current_password !== '' || $new_password !== '' || $confirm_password !== '');
+        if ($profile_ok && $wants_password_change) {
+            // Must provide all three fields
+            if ($current_password === '' || $new_password === '' || $confirm_password === '') {
+                $error = 'To change your password, please fill all password fields.';
+                $success = ''; // override success if error happens
+            } elseif (strlen($new_password) < 8) {
+                $error = 'New password must be at least 8 characters.';
+                $success = '';
+            } elseif ($new_password !== $confirm_password) {
+                $error = 'New password and its confirmation do not match.';
+                $success = '';
+            } else {
+                // Fetch current password hash
+                $pwdStmt = $conn->prepare("SELECT password FROM professor WHERE prof_ID = ?");
+                $pwdStmt->bind_param("i", $professor_id);
+                $pwdStmt->execute();
+                $pwdRes = $pwdStmt->get_result();
+                $pwdRow = $pwdRes->fetch_assoc();
+                $pwdStmt->close();
+
+                if (!$pwdRow || !password_verify($current_password, $pwdRow['password'])) {
+                    $error = 'Current password is incorrect.';
+                    $success = '';
+                } elseif (password_verify($new_password, $pwdRow['password'])) {
+                    $error = 'New password must be different from the current password.';
+                    $success = '';
+                } else {
+                    // Update to new password
+                    $new_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                    $upPwd = $conn->prepare("UPDATE professor SET password = ? WHERE prof_ID = ?");
+                    $upPwd->bind_param("si", $new_hash, $professor_id);
+                    if ($upPwd->execute()) {
+                        // Optional: clear remember_me cookie since hash changed
+                        if (isset($_COOKIE['remember_me'])) {
+                            setcookie('remember_me', '', time() - 3600, "/");
+                        }
+                        $success = ($success ? $success . ' ' : '') . 'Password changed successfully!';
+                    } else {
+                        $error = 'Error changing password. Please try again.';
+                        $success = '';
+                    }
+                    $upPwd->close();
+                }
+            }
+        }
     }
 }
+
 
 // Handle token purchase
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['purchase_tokens'])) {
@@ -110,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_university'])) {
 }
 
 // Get current profile data
-$stmt = $conn->prepare("SELECT first_name, last_name, email, phone_number, tokens FROM professor WHERE prof_ID = ?");
+$stmt = $conn->prepare("SELECT first_name, last_name, email, phone_number, tokens, two_factor_enabled FROM professor WHERE prof_ID = ?");
 $stmt->bind_param("i", $professor_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -162,6 +231,7 @@ $stmt->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="profile_style.css">
+        <link rel="stylesheet" href="music_player.css">
 </head>
 <body>
 <div class="sidebar">
@@ -217,6 +287,8 @@ $stmt->close();
                     <i class="fas fa-user-cog"></i>
                     <span>Profile</span>
                 </a>
+                 <a href="#" id="music-btn"><i class="fas fa-music"></i><span>Music</span></a>
+
                 <a href="logout.php" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
@@ -265,7 +337,33 @@ $stmt->close();
                         <input type="tel" id="phone" name="phone" 
                                value="<?php echo isset($professor['phone_number']) ? htmlspecialchars($professor['phone_number']) : ''; ?>">
                     </div>
+
+                    <div class="form-group">
+                        <label for="two_factor_enabled">Two-Step Verification (email PIN)</label>
+                        <div>
+                            <input type="checkbox" id="two_factor_enabled" name="two_factor_enabled" <?php echo (!empty($professor['two_factor_enabled'])) ? 'checked' : ''; ?>>
+                            <label for="two_factor_enabled">Require email PIN after password on login</label>
+                        </div>
+                        <small>This will send a 6-digit PIN to your email after you enter the correct password. The PIN expires in 5 minutes.</small>
+                    </div>
                     
+                    <hr style="margin: 25px 0;">
+                    <h2><i class="fas fa-key"></i> Change Password (optional)</h2>
+                    <div class="form-group">
+                    <label for="current_password">Current Password</label>
+                    <input type="password" id="current_password" name="current_password" placeholder="Enter current password">
+                    </div>
+
+                    <div class="form-group">
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="At least 8 characters">
+                    </div>
+
+                    <div class="form-group">
+                    <label for="confirm_password">Confirm New Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-type new password">
+                    </div>
+
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Update Profile
                     </button>
@@ -408,6 +506,10 @@ $stmt->close();
         }
     });
 </script>
+
+<script defer src="music_player.js"></script>
+
+
 </body>
 </html>
 <?php
